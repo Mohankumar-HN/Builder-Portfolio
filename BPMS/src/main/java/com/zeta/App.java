@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+//import static sun.security.jgss.GSSUtil.login;
+
 public class App {
     private static final String FILE_NAME = "users.json";
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -20,12 +22,17 @@ public class App {
         System.out.println("----Welcome to Builder Porfolio system----");
 
         while(true) {
-            System.out.println("Enter 1: Register 2:Login");
+            System.out.println("1: Register");
+            System.out.println("2: Login");
+            System.out.println("3: Exit");
             int n = scanner.nextInt();
             switch (n) {
                 case 1:
                     addUser(scanner);
                     saveToFile();
+                    break;
+                case 2:
+                    login(scanner);
                     break;
                 default:
                     System.out.println("Logout successful");
@@ -34,7 +41,33 @@ public class App {
         }
     }
 
-        private static void saveToFile () {
+    private static void login(Scanner scanner) {
+        System.out.println("Enter your name:");
+        String name=scanner.next();
+        System.out.println("Enter your password");
+        String password=scanner.next();
+        ROLE_TYPE role = null;
+
+        while (role == null) {
+            System.out.println("Enter your role (PROJECTMANAGER, BUILDER, CLIENT): ");
+            String roleInput = scanner.next();
+
+            try {
+                role = ROLE_TYPE.valueOf(roleInput.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid role. Please try again.");
+            }
+        }
+
+        AuthService authService=new AuthService();
+        if(authService.logIn(name,password,role)){
+            System.out.println("login successful");
+        }else{
+            System.out.println("login failed");
+        }
+    }
+
+    private static void saveToFile () {
             try {
                 mapper.writerWithDefaultPrettyPrinter()
                         .writeValue(new File(FILE_NAME), users);
@@ -52,8 +85,20 @@ public class App {
             System.out.print("Enter Password: ");
             String password = scanner.nextLine();
 
-            System.out.print("Enter Role");
-            ROLE_TYPE role = ROLE_TYPE.valueOf(scanner.next());
+            ROLE_TYPE role = null;
+
+            while (role == null) {
+                System.out.println("Enter your role (PROJECTMANAGER, BUILDER, CLIENT): ");
+                String roleInput = scanner.next();
+
+                try {
+                    role = ROLE_TYPE.valueOf(roleInput.toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Invalid role. Please try again.");
+                }
+            }
+
+
 
             users.add(new User(name, password, role));
             System.out.println("Successfull Registration");

@@ -1,11 +1,5 @@
 [ {
-  "Name" : "mohan",
-  "password" : "1234",
-  "role" : "BUILDER",
-  "name" : "mohan"
-}, {
-  "Name" : "pragnya",
-  "password" : "BUILDER",
-  "role" : "BUILDER",
-  "name" : "prajnya"
+  "name" : "mohan",
+  "password" : "123",
+  "role" : "BUILDER"
 } ]

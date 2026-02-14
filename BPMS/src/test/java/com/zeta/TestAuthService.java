@@ -15,7 +15,7 @@ public class TestAuthService {
 
     @Test
     void testForIncorrectUsername(){
-        boolean result=authService.logIn("pragnya","BUILDER");
+        boolean result=authService.logIn("JOHN","234");
         assertEquals(true,result);
     }
 
