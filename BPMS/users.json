@@ -1,7 +1,6 @@
 [ {
-  "Id" : "f1ba8536-1103-4d1a-9d5d-b7f68825e318",
+  "id" : "1",
   "name" : "mohan",
   "password" : "123",
-  "role" : "BUILDER",
-  "id" : "f1ba8536-1103-4d1a-9d5d-b7f68825e318"
+  "role" : "BUILDER"
 } ]

@@ -13,11 +13,9 @@ import java.util.*;
 public class App {
     private static final String FILE_NAME = "users.json";
     private static final ObjectMapper mapper = new ObjectMapper();
-    public static List<User> users = new ArrayList<>();
+    public static List<User> users = Collections.synchronizedList(new ArrayList<>());
 
-    public static String generateUUID() {
-        return UUID.randomUUID().toString();
-    }
+
 
     public static void main(String[] args) {
         loadFromFile();
@@ -212,21 +210,39 @@ public class App {
                     System.out.println("Invalid role. Please try again.");
                 }
             }
+            System.out.println("Enter your id");
+            String id=scanner.next();
 
-            users.add(new User(generateUUID(),name, password, role));
+            AuthService authService=new AuthService();
+            if(authService.register(id)){
+                System.out.println("User already registered");
+                return;
+            }
+            users.add(new User(id,name, password, role));
             System.out.println("Successfull Registration");
         }
 
     private static void loadFromFile () {
             try {
                 File file = new File(FILE_NAME);
-                if (file.exists()) {
-                    users = mapper.readValue(
+                if(!file.exists()){
+                    System.out.println("File not found");
+                    file.createNewFile();
+                    return;
+                }
+                if(file.length()==0){
+                    System.out.println("file is empty");
+                    return;
+                }
+                users = mapper.readValue(
                             file,
                             new TypeReference<List<User>>() {
                             }
+
                     );
-                }
+                System.out.println("File path: " + file.getAbsolutePath());
+
+
             } catch (IOException e) {
                 System.out.println("Error loading data: " + e.getMessage());
             }
