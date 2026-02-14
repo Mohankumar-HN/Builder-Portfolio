@@ -1,4 +1,4 @@
-package com.zeta;
+package com.zeta.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

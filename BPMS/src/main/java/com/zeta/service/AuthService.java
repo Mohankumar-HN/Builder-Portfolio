@@ -1,8 +1,8 @@
-package com.zeta;
+package com.zeta.service;
 
-import java.util.Scanner;
+import com.zeta.entity.User;
 
-import static com.zeta.App.users;
+import static com.zeta.console.App.users;
 
 public class AuthService {
 

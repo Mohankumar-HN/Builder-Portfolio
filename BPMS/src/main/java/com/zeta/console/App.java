@@ -1,19 +1,19 @@
-package com.zeta;
+package com.zeta.console;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zeta.service.AuthService;
+import com.zeta.entity.ROLE_TYPE;
+import com.zeta.entity.User;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 public class App {
     private static final String FILE_NAME = "users.json";
     private static final ObjectMapper mapper = new ObjectMapper();
-    static List<User> users = new ArrayList<>();
+    public static List<User> users = new ArrayList<>();
 
     public static String generateUUID() {
         return UUID.randomUUID().toString();
@@ -26,24 +26,29 @@ public class App {
 
         while (true) {
             System.out.println("1: Register");
-            System.out.println("2: Select Role");
+            System.out.println("2: Login");
             System.out.println("3: Exit");
 
-            int n = scanner.nextInt();
+            try {
+                int n = scanner.nextInt();
 
-            switch (n) {
-                case 1:
-                    addUser(scanner);
-                    saveToFile();
-                    break;
-                case 2:
-                    login(scanner);
-                    break;
-                case 3:
-                    System.out.println("Exiting...");
-                    return;  // 🔥 Proper exit
-                default:
-                    System.out.println("Invalid choice");
+                switch (n) {
+                    case 1:
+                        addUser(scanner);
+                        saveToFile();
+                        break;
+                    case 2:
+                        login(scanner);
+                        break;
+                    case 3:
+                        System.out.println("Exiting...");
+                        return;
+                    default:
+                        System.out.println("Invalid choice");
+                }
+            }catch (java.util.InputMismatchException inputMismatchException){
+                System.out.println("Invalid input");
+                scanner.nextLine();
             }
         }
     }
@@ -55,23 +60,26 @@ public class App {
             System.out.println("2. Builder");
             System.out.println("3. Client");
 
-            int roleChoice = scanner.nextInt();
-
-            ROLE_TYPE selectedRole = null;
-
-            switch (roleChoice) {
-                case 1:
-                    selectedRole = ROLE_TYPE.PROJECTMANAGER;
-                    break;
-                case 2:
-                    selectedRole = ROLE_TYPE.BUILDER;
-                    break;
-                case 3:
-                    selectedRole = ROLE_TYPE.CLIENT;
-                    break;
-                default:
-                    System.out.println("Invalid role selection.");
-                    return;
+        ROLE_TYPE selectedRole = null;
+            try {
+                int roleChoice = scanner.nextInt();
+                switch (roleChoice) {
+                    case 1:
+                        selectedRole = ROLE_TYPE.PROJECTMANAGER;
+                        break;
+                    case 2:
+                        selectedRole = ROLE_TYPE.BUILDER;
+                        break;
+                    case 3:
+                        selectedRole = ROLE_TYPE.CLIENT;
+                        break;
+                    default:
+                        System.out.println("Invalid role selection.");
+                        return;
+                }
+            }catch (InputMismatchException inputMismatchException){
+                System.out.println("Invalid input");
+                scanner.nextLine();
             }
 
             System.out.println("Enter your name:");

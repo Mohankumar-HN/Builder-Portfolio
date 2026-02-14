@@ -1,5 +1,7 @@
 package com.zeta;
 
+import com.zeta.entity.User;
+import com.zeta.service.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +17,7 @@ public class TestAuthService {
 
     @Test
     void testForIncorrectUsername(){
-        boolean result=authService.logIn("JOHN","234");
+        User result=authService.logIn("JOHN","234");
         assertEquals(true,result);
     }
 
