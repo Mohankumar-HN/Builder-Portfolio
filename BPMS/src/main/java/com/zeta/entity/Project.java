@@ -14,7 +14,7 @@ public class Project {
     private String builderId;
     private PROJECT_STATUS status;
 
-    private List<Task> tasks = new ArrayList<>();
+//    private List<Task> tasks = new ArrayList<>();
 
     public Project(String projectId, String name, String description,
                    String startDate, String endDate,
@@ -46,8 +46,8 @@ public class Project {
         this.builderId = builderName;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
-    }
+//    public List<Task> getTasks() {
+//        return tasks;
+//    }
 
 }

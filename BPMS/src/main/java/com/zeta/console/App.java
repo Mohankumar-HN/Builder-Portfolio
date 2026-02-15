@@ -118,6 +118,8 @@ public class App {
 
             switch (choice) {
                 case 1:
+                    ProjectService service = new ProjectService();
+                    service.createProject("1","name","desc","01-02-2026","01-02-2027","C1","Pm1");
                     System.out.println("Project created!");
                     break;
                 case 2:
