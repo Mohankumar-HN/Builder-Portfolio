@@ -1,5 +1,8 @@
 package com.zeta.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Project {
 
     private String projectId;
@@ -12,7 +15,8 @@ public class Project {
     private String builderId;
     private PROJECT_STATUS status;
 
-//    private List<Task> tasks = new ArrayList<>();
+    private String builderName;
+    private List<Task> tasks = new ArrayList<>();
 
     public Project(String projectId, String name, String description,
                    String startDate, String endDate,
@@ -31,6 +35,7 @@ public class Project {
     public String getProjectId() {
         return projectId;
     }
+    public String getClientId() { return clientId; }
 
     public PROJECT_STATUS getStatus() {
         return status;
@@ -44,9 +49,14 @@ public class Project {
         this.builderId = builderName;
     }
 
-//    public List<Task> getTasks() {
-//        return tasks;
-//    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+    public String getBuilderName() {
+        return builderName;
+    }
+
 
     @Override
     public String toString() {

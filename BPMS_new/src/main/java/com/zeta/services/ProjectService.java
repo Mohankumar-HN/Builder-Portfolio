@@ -2,6 +2,8 @@
 package com.zeta.services;
 import com.zeta.entity.PROJECT_STATUS;
 import com.zeta.entity.Project;
+import com.zeta.entity.TASK_STATUS;
+import com.zeta.entity.Task;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,9 +44,7 @@ public class ProjectService {
         }else{
             System.out.println("project not found");
         }
-
     }
-
     public  synchronized void assignBuilder(String id,String name){
         Project project=projects.get(id);
         if(project!=null){
@@ -54,5 +54,78 @@ public class ProjectService {
             System.out.println("project not found");
         }
     }
-
+    public synchronized void createTask(String projectId, String taskId, String taskName,
+                                        String description, String builderName) {
+        Project project = projects.get(projectId);
+        if (project != null) {
+            Task task = new Task(taskId, taskName,
+                    description, builderName);
+            project.getTasks().add(task);
+            System.out.println("Task created successfully!");
+        } else {
+            System.out.println("Project not found!");
+        }
+    }
+    public synchronized void showAllTasks() {
+        for (Project project : projects.values()) {
+            System.out.println("Project: " + project.getProjectId());
+            for (Task task : project.getTasks()) {
+                System.out.println(task);
+            }
+        }
+    }
+    public synchronized void showBuilderProjects(String builderName) {
+        boolean found = false;
+        for (Project project : projects.values()) {
+            if (builderName.equals(project.getBuilderName())) {
+                System.out.println(project);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No projects assigned.");
+        }
+    }
+    public synchronized void showBuilderTasks(String builderName) {
+        boolean found = false;
+        for (Project project : projects.values()) {
+            for (Task task : project.getTasks()) {
+                if (builderName.equals(task.getAssignedBuilder())) {
+                    System.out.println("Project: " + project.getProjectId());
+                    System.out.println(task);
+                    found = true;
+                }
+            }
+        }
+        if (!found) {
+            System.out.println("No tasks assigned.");
+        }
+    }
+    public synchronized void updateTaskStatus(String projectId, String taskId, String builderName) {
+        Project project = projects.get(projectId);
+        if (project == null) {
+            System.out.println("Project not found.");
+            return;
+        }
+        for (Task task : project.getTasks()) {
+            if (task.getTaskId().equals(taskId) && task.getAssignedBuilder().equals(builderName)) {
+                task.setStatus(TASK_STATUS.Completed);
+                System.out.println("Task marked as completed!");
+                return;
+            }
+        }
+        System.out.println("Task not found or not assigned to you.");
+    }
+    public synchronized void showClientProjects(String clientId) {
+        boolean found = false;
+        for (Project project : projects.values()) {
+            if (clientId.equals(project.getClientId())) {
+                System.out.println(project);
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No projects found for this client.");
+        }
+    }
 }

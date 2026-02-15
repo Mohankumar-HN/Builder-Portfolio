@@ -1,26 +1,6 @@
 [ {
   "id" : "1",
   "name" : "pragnya",
-  "password" : "pas",
+  "password" : "pass",
   "role" : "PROJECTMANAGER"
-}, {
-  "id" : "2",
-  "name" : "srujana",
-  "password" : "sru",
-  "role" : "PROJECTMANAGER"
-}, {
-  "id" : "24",
-  "name" : "manognya",
-  "password" : "manu",
-  "role" : "PROJECTMANAGER"
-}, {
-  "id" : "27",
-  "name" : "mohan",
-  "password" : "123",
-  "role" : "BUILDER"
-}, {
-  "id" : "12",
-  "name" : "bob",
-  "password" : "123",
-  "role" : "CLIENT"
 } ]

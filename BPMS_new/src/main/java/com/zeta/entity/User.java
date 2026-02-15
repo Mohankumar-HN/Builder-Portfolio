@@ -12,10 +12,6 @@ public class User {
     @JsonProperty
     private ROLE_TYPE role;
 
-    public User(){
-
-    }
-
     public User(String id, String name, String password, ROLE_TYPE role) {
         this.id = id;
         this.name= name;

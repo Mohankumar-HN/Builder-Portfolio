@@ -120,8 +120,9 @@ public class App {
             System.out.println("2. Update Project");
             System.out.println("3. see projects");
             System.out.println("4. Assign Builders");
-            System.out.println("5. Delete project");
-            System.out.println("6. Exit");
+            System.out.println("5. Create Task");
+            System.out.println("6. Delete project");
+            System.out.println("7. Exit");
 
             int choice = scanner.nextInt();
             switch (choice) {
@@ -171,12 +172,15 @@ public class App {
                     service.assignBuilder(pid,buildername);
                     break;
                 case 5:
+                    taskMenu(scanner);
+                    break;
+                case 6:
                     System.out.println("enter project id to delete");
                     scanner.nextLine();
                     String deleteid=scanner.nextLine();
                     service.deleteProject(deleteid);
                     break;
-                case 6:
+                case 7:
                     System.out.println("Exiting...");
                     return;
                 default:
@@ -185,23 +189,85 @@ public class App {
         }
     }
 
+    private static void taskMenu(Scanner scanner) {
+
+        while (true) {
+
+            System.out.println("\n--- TASK MENU ---");
+            System.out.println("1. Create Task");
+            System.out.println("2. View All Tasks");
+            System.out.println("3. Back");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter Project ID:");
+                    String projectId = scanner.nextLine();
+
+                    System.out.println("Enter Task ID:");
+                    String taskId = scanner.nextLine();
+
+                    System.out.println("Enter Task Name:");
+                    String taskName = scanner.nextLine();
+
+                    System.out.println("Enter Task Description:");
+                    String taskDesc = scanner.nextLine();
+
+                    System.out.println("Enter Builder Name:");
+                    String builderName = scanner.nextLine();
+
+                    service.createTask(projectId,
+                            taskId,
+                            taskName,
+                            taskDesc,
+                            builderName);
+                    break;
+
+                case 2:
+                    service.showAllTasks();
+                    break;
+
+                case 3:
+                    return;
+
+                default:
+                    System.out.println("Invalid choice");
+            }
+        }
+    }
+
     private static void builderMenu(Scanner scanner) {
+        System.out.println("Hello Builder!!");
+        System.out.println("Enter your name:");
+        scanner.nextLine();
+        String builderName = scanner.nextLine();
+
         while (true) {
             System.out.println("\n--- BUILDER MENU ---");
             System.out.println("1. View Assigned Projects");
-            System.out.println("2. Update Status");
-            System.out.println("3. Logout");
+            System.out.println("2. View My Tasks");
+            System.out.println("3. Mark Task Completed");
+            System.out.println("4. Logout");
 
             int choice = scanner.nextInt();
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    System.out.println("Showing assigned projects...");
+                    service.showBuilderProjects(builderName);
                     break;
                 case 2:
-                    System.out.println("Status updated!");
+                    service.showBuilderTasks(builderName);
                     break;
                 case 3:
+                    System.out.println("Enter Project ID:");
+                    String projectId = scanner.nextLine();
+                    System.out.println("Enter Task ID:");
+                    String taskId = scanner.nextLine();
+                    service.updateTaskStatus(projectId, taskId, builderName);
+                    break;
+                case 4:
                     return;
                 default:
                     System.out.println("Invalid choice");
@@ -210,19 +276,28 @@ public class App {
     }
 
     private static void clientMenu(Scanner scanner) {
+        System.out.println("Enter your Client ID:");
+        scanner.nextLine();
+        String clientId = scanner.nextLine();
+
         while (true) {
+
             System.out.println("\n--- CLIENT MENU ---");
             System.out.println("1. View My Projects");
             System.out.println("2. Logout");
 
             int choice = scanner.nextInt();
+            scanner.nextLine();
 
             switch (choice) {
+
                 case 1:
-                    System.out.println("Showing your projects...");
+                    service.showClientProjects(clientId);
                     break;
+
                 case 2:
                     return;
+
                 default:
                     System.out.println("Invalid choice");
             }
@@ -284,13 +359,8 @@ public class App {
             }
             users = mapper.readValue(
                     file,
-                    new TypeReference<List<User>>() {
-                    }
-
-            );
+                    new TypeReference<List<User>>() {});
             System.out.println("File path: " + file.getAbsolutePath());
-
-
         } catch (IOException e) {
             System.out.println("Error loading data: " + e.getMessage());
         }
