@@ -1,4 +1,3 @@
-
 package com.zeta.console;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -357,9 +356,7 @@ public class App {
                 System.out.println("file is empty");
                 return;
             }
-            users = mapper.readValue(
-                    file,
-                    new TypeReference<List<User>>() {});
+            users = mapper.readValue(file, new TypeReference<List<User>>() {});
             System.out.println("File path: " + file.getAbsolutePath());
         } catch (IOException e) {
             System.out.println("Error loading data: " + e.getMessage());

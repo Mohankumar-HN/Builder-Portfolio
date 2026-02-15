@@ -11,7 +11,6 @@ import static junit.framework.Assert.*;
 
 public class TestAuthService {
     AuthService authService;
-
     @BeforeEach
     void setUp() {
         authService = new AuthService();
@@ -45,8 +44,8 @@ public class TestAuthService {
     }
     @Test
     public void testLoginMultipleUsers() {
-        App.users.add(new User("2", "Ravi", "abcd", ROLE_TYPE.BUILDER));
-        User otherUser = authService.logIn("Ravi", "abcd");
+        App.users.add(new User("2", "mohan", "abcd", ROLE_TYPE.BUILDER));
+        User otherUser = authService.logIn("mohan", "abcd");
         assertNotNull(otherUser);
         assertEquals(ROLE_TYPE.BUILDER, otherUser.getRole());
     }
