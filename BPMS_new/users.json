@@ -3,4 +3,14 @@
   "name" : "pragnya",
   "password" : "pas",
   "role" : "PROJECTMANAGER"
+}, {
+  "id" : "2",
+  "name" : "srujana",
+  "password" : "sru",
+  "role" : "PROJECTMANAGER"
+}, {
+  "id" : "24",
+  "name" : "manognya",
+  "password" : "manu",
+  "role" : "PROJECTMANAGER"
 } ]

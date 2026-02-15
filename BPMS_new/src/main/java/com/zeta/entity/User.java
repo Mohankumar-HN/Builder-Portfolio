@@ -1,7 +1,6 @@
 package com.zeta.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.zeta.model.ROLE_TYPE;
 
 public class User {
     @JsonProperty

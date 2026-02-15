@@ -1,6 +1,4 @@
-package com.zeta.model;
-import java.util.ArrayList;
-import java.util.List;
+package com.zeta.entity;
 
 public class Project {
 

@@ -1,10 +1,13 @@
+
 package com.zeta.console;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zeta.service.AuthService;
-import com.zeta.model.ROLE_TYPE;
+import com.zeta.entity.PROJECT_STATUS;
+import com.zeta.services.AuthService;
+import com.zeta.entity.ROLE_TYPE;
 import com.zeta.entity.User;
+import com.zeta.services.ProjectService;
 
 import java.io.File;
 import java.io.IOException;
@@ -108,25 +111,26 @@ public class App {
     }
 
     private static void projectManagerMenu(Scanner scanner) {
+        ProjectService service = new ProjectService();
         while (true) {
             System.out.println("\n--- PROJECT MANAGER MENU ---");
             System.out.println("1. Create Project");
-            System.out.println("2. View Projects");
-            System.out.println("3. Logout");
+            System.out.println("2. Update Project");
+            System.out.println("3. see projects");
 
             int choice = scanner.nextInt();
-
             switch (choice) {
                 case 1:
-                    com.zeta.service.ProjectService service = new com.zeta.service.ProjectService();
                     service.createProject("1","name","desc","01-02-2026","01-02-2027","C1","Pm1");
-                    System.out.println("Project created!");
                     break;
                 case 2:
-                    System.out.println("Showing projects...");
+                    service.updateStatus("1", PROJECT_STATUS.INPROGRESS);
+                    System.out.println("Updated project...");
                     break;
                 case 3:
-                    return;
+                    System.out.println("Showing projects");
+                    service.showProjects();
+                    break;
                 default:
                     System.out.println("Invalid choice");
             }
@@ -160,25 +164,16 @@ public class App {
     private static void clientMenu(Scanner scanner) {
         while (true) {
             System.out.println("\n--- CLIENT MENU ---");
-            System.out.println("0 : give project");
             System.out.println("1. View My Projects");
-            System.out.println("2. Give Feedback");
-            System.out.println("3. Logout");
+            System.out.println("2. Logout");
 
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 0:
-                    System.out.println("Taking project from client");
-
-
                 case 1:
                     System.out.println("Showing your projects...");
                     break;
                 case 2:
-                    System.out.println("Feedback submitted!");
-                    break;
-                case 3:
                     return;
                 default:
                     System.out.println("Invalid choice");

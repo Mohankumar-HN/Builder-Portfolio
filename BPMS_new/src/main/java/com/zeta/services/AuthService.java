@@ -1,10 +1,9 @@
-package com.zeta.service;
+package com.zeta.services;
 
-import com.zeta.console.App;
-import com.zeta.model.ROLE_TYPE;
 import com.zeta.entity.User;
 
 import static com.zeta.console.App.users;
+
 
 public class AuthService {
 
