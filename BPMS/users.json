@@ -3,4 +3,9 @@
   "name" : "mohan",
   "password" : "123",
   "role" : "BUILDER"
+}, {
+  "id" : "12",
+  "name" : "pragnya",
+  "password" : "abcd",
+  "role" : "PROJECTMANAGER"
 } ]

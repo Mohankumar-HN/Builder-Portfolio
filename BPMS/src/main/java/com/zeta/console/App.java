@@ -15,8 +15,6 @@ public class App {
     private static final ObjectMapper mapper = new ObjectMapper();
     public static List<User> users = Collections.synchronizedList(new ArrayList<>());
 
-
-
     public static void main(String[] args) {
         loadFromFile();
         Scanner scanner = new Scanner(System.in);
@@ -160,6 +158,7 @@ public class App {
     private static void clientMenu(Scanner scanner) {
         while (true) {
             System.out.println("\n--- CLIENT MENU ---");
+            System.out.println("0 : give project");
             System.out.println("1. View My Projects");
             System.out.println("2. Give Feedback");
             System.out.println("3. Logout");
@@ -167,6 +166,10 @@ public class App {
             int choice = scanner.nextInt();
 
             switch (choice) {
+                case 0:
+                    System.out.println("Taking project from client");
+                    StoreProjects.addProjects();
+
                 case 1:
                     System.out.println("Showing your projects...");
                     break;
