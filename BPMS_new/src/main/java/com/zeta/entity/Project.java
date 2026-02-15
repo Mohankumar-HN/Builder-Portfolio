@@ -16,7 +16,7 @@ public class Project {
 
     public Project(String projectId, String name, String description,
                    String startDate, String endDate,
-                   String clientId, String projectManagerId,PROJECT_STATUS status) {
+                   String clientId,PROJECT_STATUS status) {
 
         this.projectId = projectId;
         this.name = name;
@@ -24,8 +24,8 @@ public class Project {
         this.startDate = startDate;
         this.endDate = endDate;
         this.clientId = clientId;
-        this.projectManagerId = projectManagerId;
-        this.status = PROJECT_STATUS.UPCOMING;
+//        this.projectManagerId = projectManagerId;
+        this.status = status;
     }
 
     public String getProjectId() {
@@ -47,5 +47,19 @@ public class Project {
 //    public List<Task> getTasks() {
 //        return tasks;
 //    }
+
+    @Override
+    public String toString() {
+        return "Project ID: " + projectId +
+                "\nName: " + name +
+                "\nDescription: " + description +
+                "\nStart Date: " + startDate +
+                "\nEnd Date: " + endDate +
+                "\nClient ID: " + clientId +
+                "\nProject Manager ID: " + projectManagerId +
+                "\nBuilder ID: " + builderId +
+                "\nStatus: " + status ;
+    }
+
 
 }

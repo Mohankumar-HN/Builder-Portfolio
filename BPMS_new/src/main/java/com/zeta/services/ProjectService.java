@@ -9,9 +9,9 @@ import java.util.Map;
 public class ProjectService {
     final Map<String,Project> projects = new HashMap<>();
     public synchronized void createProject(String id, String name, String description,
-                                           String start, String end, String clientId, String managerId) {
+                                           String start, String end, String clientId,PROJECT_STATUS status) {
 
-        Project project = new Project(id, name, description, start, end, clientId, managerId, PROJECT_STATUS.UPCOMING);
+        Project project = new Project(id, name, description, start, end, clientId,status);
         projects.put(id, project);
         System.out.println("Project Created Successfully!");
     }
@@ -25,13 +25,34 @@ public class ProjectService {
         }
     }
     public synchronized void showProjects() {
-        for(Map.Entry<String,Project> mapentry: projects.entrySet()){
-            System.out.println(mapentry.getKey()+" "+mapentry.getValue());
+        if(projects.isEmpty()){
+            System.out.println("No project found");
+        }else {
+            for (Project project : projects.values()) {
+                System.out.println(project);
+            }
         }
-        System.out.println(projects);
+
     }
 
+    public synchronized void deleteProject(String id){
+        if(projects.containsKey(id)){
+            projects.remove(id);
+            System.out.println("Project deleted successfully");
+        }else{
+            System.out.println("project not found");
+        }
 
+    }
 
+    public  synchronized void assignBuilder(String id,String name){
+        Project project=projects.get(id);
+        if(project!=null){
+            project.setBuilderName(name);
+            System.out.println("Builder assigned successfully");
+        }else{
+            System.out.println("project not found");
+        }
+    }
 
 }

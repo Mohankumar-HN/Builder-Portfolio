@@ -13,4 +13,14 @@
   "name" : "manognya",
   "password" : "manu",
   "role" : "PROJECTMANAGER"
+}, {
+  "id" : "27",
+  "name" : "mohan",
+  "password" : "123",
+  "role" : "BUILDER"
+}, {
+  "id" : "12",
+  "name" : "bob",
+  "password" : "123",
+  "role" : "CLIENT"
 } ]

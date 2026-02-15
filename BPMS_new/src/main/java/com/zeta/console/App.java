@@ -79,6 +79,7 @@ public class App {
         }catch (InputMismatchException inputMismatchException){
             System.out.println("Invalid input");
             scanner.nextLine();
+            return;
         }
 
         System.out.println("Enter your name:");
@@ -110,27 +111,74 @@ public class App {
         }
     }
 
+     private static  ProjectService service = new ProjectService();
     private static void projectManagerMenu(Scanner scanner) {
-        ProjectService service = new ProjectService();
+
         while (true) {
             System.out.println("\n--- PROJECT MANAGER MENU ---");
             System.out.println("1. Create Project");
             System.out.println("2. Update Project");
             System.out.println("3. see projects");
+            System.out.println("4. Assign Builders");
+            System.out.println("5. Delete project");
+            System.out.println("6. Exit");
 
             int choice = scanner.nextInt();
             switch (choice) {
                 case 1:
-                    service.createProject("1","name","desc","01-02-2026","01-02-2027","C1","Pm1");
+                    scanner.nextLine();
+                    System.out.println("Enter project ID");
+                    String id=scanner.nextLine();
+                    System.out.println("Enter project name");
+                    String name=scanner.nextLine();
+                    System.out.println("Enter description");
+                    String descript=scanner.nextLine();
+                    System.out.println("Enter start date");
+                    String startDate=scanner.nextLine();
+                    System.out.println("Enter end date");
+                    String endDate=scanner.nextLine();
+                    System.out.println("Enter client id");
+                    String clientid=scanner.nextLine();
+                    System.out.println("Enter project status");
+                    PROJECT_STATUS status= PROJECT_STATUS.valueOf(scanner.next());
+                    service.createProject(id,name,descript,startDate,endDate,clientid,status);
                     break;
                 case 2:
-                    service.updateStatus("1", PROJECT_STATUS.INPROGRESS);
-                    System.out.println("Updated project...");
+                    System.out.println("Enter project id");
+                    String updateid=scanner.next();
+                    System.out.println("Change status to--UPCOMING,INPROGRESS,COMPLETED");
+                    String statusInput = scanner.next();
+                    try {
+                        PROJECT_STATUS updatestatus =
+                                PROJECT_STATUS.valueOf(statusInput.toUpperCase());
+
+                        service.updateStatus(updateid, updatestatus);
+                        System.out.println("Updated project...");
+
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Invalid status entered!");
+                    }
                     break;
                 case 3:
                     System.out.println("Showing projects");
                     service.showProjects();
                     break;
+                case 4:
+                    System.out.println("Enter project ID");
+                    String pid=scanner.next();
+                    System.out.println("Enter builder name");
+                    String buildername=scanner.next();
+                    service.assignBuilder(pid,buildername);
+                    break;
+                case 5:
+                    System.out.println("enter project id to delete");
+                    scanner.nextLine();
+                    String deleteid=scanner.nextLine();
+                    service.deleteProject(deleteid);
+                    break;
+                case 6:
+                    System.out.println("Exiting...");
+                    return;
                 default:
                     System.out.println("Invalid choice");
             }
