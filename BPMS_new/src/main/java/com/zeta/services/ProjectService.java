@@ -10,9 +10,13 @@ import java.util.Map;
 
 public class ProjectService {
     final Map<String,Project> projects = new HashMap<>();
+    private static int projectCounter = 1;
+    private String generateProjectId() {
+        return "P" + (projectCounter++);
+    }
     public synchronized void createProject(String id, String name, String description,
                                            String start, String end, String clientId,PROJECT_STATUS status) {
-
+        id = generateProjectId();
         Project project = new Project(id, name, description, start, end, clientId,status);
         projects.put(id, project);
         System.out.println("Project Created Successfully!");
@@ -54,13 +58,21 @@ public class ProjectService {
             System.out.println("project not found");
         }
     }
+    private static int taskCounter = 1;
+
+    public String generateTaskId() {
+        return "T" + (taskCounter++);
+    }
+
     public synchronized void createTask(String projectId, String taskId, String taskName,
                                         String description, String builderName) {
         Project project = projects.get(projectId);
         if (project != null) {
+            taskId=generateTaskId();
             Task task = new Task(taskId, taskName,
                     description, builderName);
             project.getTasks().add(task);
+            System.out.println("Task Id : "+taskId );
             System.out.println("Task created successfully!");
         } else {
             System.out.println("Project not found!");

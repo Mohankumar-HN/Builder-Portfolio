@@ -11,7 +11,7 @@ public class User {
     private String password;
     @JsonProperty
     private ROLE_TYPE role;
-
+    public User() {}
     public User(String id, String name, String password, ROLE_TYPE role) {
         this.id = id;
         this.name= name;
@@ -20,7 +20,7 @@ public class User {
     }
 
     public String getId(){return id;}
-    public String getName() {
+    public String getUserName() {
         return name;
     }
 

@@ -29,6 +29,7 @@ public class App {
 
             try {
                 int n = scanner.nextInt();
+                scanner.nextLine();
 
                 switch (n) {
                     case 1:
@@ -95,13 +96,13 @@ public class App {
 
             switch (selectedRole) {
                 case PROJECTMANAGER:
-                    projectManagerMenu(scanner);
+                    projectManagerMenu(scanner,loggedInUser);
                     break;
                 case BUILDER:
-                    builderMenu(scanner);
+                    builderMenu(scanner,loggedInUser);
                     break;
                 case CLIENT:
-                    clientMenu(scanner);
+                    clientMenu(scanner,loggedInUser);
                     break;
             }
 
@@ -111,7 +112,7 @@ public class App {
     }
 
      private static  ProjectService service = new ProjectService();
-    private static void projectManagerMenu(Scanner scanner) {
+    private static void projectManagerMenu(Scanner scanner,User user) {
 
         while (true) {
             System.out.println("\n--- PROJECT MANAGER MENU ---");
@@ -126,8 +127,7 @@ public class App {
             int choice = scanner.nextInt();
             switch (choice) {
                 case 1:
-                    scanner.nextLine();
-                    System.out.println("Enter project ID");
+                    System.out.println("Your Id : "+user.getId());
                     String id=scanner.nextLine();
                     System.out.println("Enter project name");
                     String name=scanner.nextLine();
@@ -203,9 +203,8 @@ public class App {
                 case 1:
                     System.out.println("Enter Project ID:");
                     String projectId = scanner.nextLine();
-
-                    System.out.println("Enter Task ID:");
-                    String taskId = scanner.nextLine();
+                    String taskId = service.generateTaskId();
+                    System.out.println("Enter Task ID: "+taskId);
 
                     System.out.println("Enter Task Name:");
                     String taskName = scanner.nextLine();
@@ -236,11 +235,12 @@ public class App {
         }
     }
 
-    private static void builderMenu(Scanner scanner) {
+    private static void builderMenu(Scanner scanner,User user) {
         System.out.println("Hello Builder!!");
-        System.out.println("Enter your name:");
-        scanner.nextLine();
-        String builderName = scanner.nextLine();
+        String builderId = user.getId();
+        String builderName = user.getUserName();
+        System.out.println("Name : "+builderName);
+        System.out.println("ID : " +builderId);
 
         while (true) {
             System.out.println("\n--- BUILDER MENU ---");
@@ -274,10 +274,10 @@ public class App {
         }
     }
 
-    private static void clientMenu(Scanner scanner) {
-        System.out.println("Enter your Client ID:");
-        scanner.nextLine();
-        String clientId = scanner.nextLine();
+    private static void clientMenu(Scanner scanner,User user) {
+        String clientId = user.getId();
+
+        System.out.println("Your Client ID: "+clientId);
 
         while (true) {
 
@@ -313,12 +313,47 @@ public class App {
     }
 
     private static void addUser (Scanner scanner){
-        System.out.print("Enter name: ");
-        String name = scanner.next();
-        scanner.nextLine();
+        AuthService authService = new AuthService();
+        //changed
 
-        System.out.print("Enter Password: ");
-        String password = scanner.nextLine();
+        String username;
+
+        while (true) {
+            System.out.print("Enter username: ");
+            username = scanner.nextLine();
+
+            if (username.trim().isEmpty()) {
+                System.out.println("Username cannot be empty.");
+                continue;
+            }
+
+            if (authService.usernameExists(username)) {
+                System.out.println("Username already taken. Try another.");
+            }
+            else {
+                break;
+            }
+
+        }
+
+
+        String password;
+
+        while (true) {
+            System.out.print("Enter Password: ");
+            password = scanner.nextLine();
+
+            if (authService.isValidPassword(password)) {
+                break;
+            } else {
+                System.out.println("Password must contain:");
+                System.out.println("- Minimum 8 characters");
+                System.out.println("- At least 1 uppercase letter");
+                System.out.println("- At least 1 lowercase letter");
+                System.out.println("- At least 1 digit");
+                System.out.println("- At least 1 special character (@#$%^&+=!)");
+            }
+        }
 
         ROLE_TYPE role = null;
 
@@ -332,15 +367,14 @@ public class App {
                 System.out.println("Invalid role. Please try again.");
             }
         }
-        System.out.println("Enter your id");
-        String id=scanner.next();
+        String id = authService.generateUserId();
+        System.out.println("Generated User ID: " + id);
 
-        AuthService authService=new AuthService();
         if(authService.register(id)){
             System.out.println("User already registered");
             return;
         }
-        users.add(new User(id,name, password, role));
+        users.add(new User(id,username, password, role));
         System.out.println("Successfull Registration");
     }
 
