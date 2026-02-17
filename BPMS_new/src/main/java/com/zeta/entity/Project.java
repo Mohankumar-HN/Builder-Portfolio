@@ -38,6 +38,30 @@ public class Project {
     }
     public String getClientId() { return clientId; }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public String getProjectManagerId() {
+        return projectManagerId;
+    }
+
+    public String getBuilderId() {
+        return builderId;
+    }
+
     public PROJECT_STATUS getStatus() {
         return status;
     }

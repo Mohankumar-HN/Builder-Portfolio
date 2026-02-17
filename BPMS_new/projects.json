@@ -1,0 +1,21 @@
+{
+  "P1" : {
+    "projectId" : "P1",
+    "name" : "sattva",
+    "description" : "building for zeta",
+    "startDate" : "12-12-2026",
+    "endDate" : "12-12-2028",
+    "clientId" : "U6",
+    "projectManagerId" : null,
+    "builderId" : null,
+    "status" : "UPCOMING",
+    "builderName" : null,
+    "tasks" : [ {
+      "taskId" : "T2",
+      "name" : "interior",
+      "description" : "kfnsdklnk",
+      "assignedBuilder" : "mohan",
+      "status" : "Upcoming"
+    } ]
+  }
+}

@@ -1,13 +1,27 @@
 package com.zeta.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Task {
 
+    @JsonProperty("taskId")
     private String id;
-    private String name;
-    private String description;
-    private String assignedBuilder;
-    private TASK_STATUS status;   // PENDING / COMPLETED
 
+    @JsonProperty("name")
+    private String name;
+
+    @JsonProperty("description")
+    private String description;
+
+    @JsonProperty("assignedBuilder")
+    private String assignedBuilder;
+
+    @JsonProperty("status")
+    private TASK_STATUS status;   
+
+
+    public Task() {
+    }
 
     public Task(String taskId, String taskName,
                 String description, String assignedBuilder) {
@@ -22,8 +36,32 @@ public class Task {
         return assignedBuilder;
     }
 
+    public void setAssignedBuilder(String assignedBuilder) {
+        this.assignedBuilder = assignedBuilder;
+    }
+
     public String getTaskId() {
         return id;
+    }
+
+    public void setTaskId(String taskId) {
+        this.id = taskId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public TASK_STATUS getStatus() {

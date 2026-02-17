@@ -6,12 +6,16 @@ import com.zeta.entity.TASK_STATUS;
 import com.zeta.entity.Task;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import com.zeta.Dao.ProjectDao;
+import com.zeta.Dao.TaskDao;
 public class ProjectService {
 
     private final ProjectDao projectDao = new ProjectDao();
+    private final TaskDao taskDao = new TaskDao();
     private Map<String, Project> projects;
+    private Map<String, List<Task>> tasksByProject;
 
     private static int projectCounter = 1;
     private String generateProjectId() {
@@ -19,6 +23,17 @@ public class ProjectService {
     }
     public ProjectService() {
         projects = projectDao.loadProjects();
+        tasksByProject = taskDao.loadTasks();
+        // populate project tasks from tasksByProject
+        for (Map.Entry<String, List<Task>> entry : tasksByProject.entrySet()) {
+            String pid = entry.getKey();
+            List<Task> ts = entry.getValue();
+            Project p = projects.get(pid);
+            if (p != null && ts != null) {
+                p.getTasks().clear();
+                p.getTasks().addAll(ts);
+            }
+        }
         projectCounter = projects.size() + 1;
     }
     //projectservice
@@ -28,12 +43,14 @@ public class ProjectService {
         Project project = new Project(id, name, description, start, end, clientId,status);
         projects.put(id, project);
         System.out.println("Project Created Successfully!");
+        projectDao.saveProjects(projects);
     }
     public synchronized void updateStatus(String projectId, PROJECT_STATUS newStatus) {
         Project project = projects.get(projectId);
         if (project != null) {
             project.setStatus(newStatus);
             System.out.println("Status Updated Successfully!");
+            projectDao.saveProjects(projects);
         } else {
             System.out.println("Project Not Found!");
         }
@@ -53,6 +70,12 @@ public class ProjectService {
         if(projects.containsKey(id)){
             projects.remove(id);
             System.out.println("Project deleted successfully");
+            projectDao.saveProjects(projects);
+            // also remove tasks for this project
+            if (tasksByProject != null && tasksByProject.containsKey(id)) {
+                tasksByProject.remove(id);
+                taskDao.saveTasks(tasksByProject);
+            }
         }else{
             System.out.println("project not found");
         }
@@ -62,6 +85,7 @@ public class ProjectService {
         if(project!=null){
             project.setBuilderName(name);
             System.out.println("Builder assigned successfully");
+            projectDao.saveProjects(projects);
         }else{
             System.out.println("project not found");
         }
@@ -80,8 +104,11 @@ public class ProjectService {
             Task task = new Task(taskId, taskName,
                     description, builderName);
             project.getTasks().add(task);
-            System.out.println("Task Id : "+taskId );
             System.out.println("Task created successfully!");
+            projectDao.saveProjects(projects);
+            
+            tasksByProject.computeIfAbsent(projectId, k -> new java.util.ArrayList<>()).add(task);
+            taskDao.saveTasks(tasksByProject);
         } else {
             System.out.println("Project not found!");
         }
@@ -131,6 +158,18 @@ public class ProjectService {
             if (task.getTaskId().equals(taskId) && task.getAssignedBuilder().equals(builderName)) {
                 task.setStatus(TASK_STATUS.Completed);
                 System.out.println("Task marked as completed!");
+                projectDao.saveProjects(projects);
+                // update tasks.json
+                List<Task> ts = tasksByProject.get(projectId);
+                if (ts != null) {
+                    for (Task t : ts) {
+                        if (t.getTaskId().equals(taskId)) {
+                            t.setStatus(TASK_STATUS.Completed);
+                            break;
+                        }
+                    }
+                    taskDao.saveTasks(tasksByProject);
+                }
                 return;
             }
         }
