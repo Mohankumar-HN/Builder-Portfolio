@@ -50,4 +50,6 @@ public class TestAuthService {
         assertNotNull(otherUser);
         assertEquals(ROLE_TYPE.BUILDER, otherUser.getRole());
     }
+
+
 }

@@ -1,5 +1,7 @@
 package com.zeta.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +16,6 @@ public class Project {
     private String projectManagerId;
     private String builderId;
     private PROJECT_STATUS status;
-
     private String builderName;
     private List<Task> tasks = new ArrayList<>();
 
@@ -31,7 +32,7 @@ public class Project {
 //        this.projectManagerId = projectManagerId;
         this.status = status;
     }
-
+    public Project(){};
     public String getProjectId() {
         return projectId;
     }

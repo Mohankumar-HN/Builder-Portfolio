@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProjectService {
-    final Map<String,Project> projects = new HashMap<>();
+    public static final Map<String,Project> projects = new HashMap<>();
     private static int projectCounter = 1;
     private String generateProjectId() {
         return "P" + (projectCounter++);
