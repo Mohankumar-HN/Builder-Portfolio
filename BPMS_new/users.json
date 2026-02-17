@@ -28,4 +28,24 @@
   "userName" : "Mohankumar",
   "password" : "Mohan@12345",
   "role" : "CLIENT"
+}, {
+  "id" : "U7",
+  "userName" : "fdg",
+  "password" : "Pragnya!2234",
+  "role" : "CLIENT"
+}, {
+  "id" : "U8",
+  "userName" : "erfgd",
+  "password" : "Pragnya@11233",
+  "role" : "CLIENT"
+}, {
+  "id" : "U9",
+  "userName" : "Manognya",
+  "password" : "Manu@1234",
+  "role" : "CLIENT"
+}, {
+  "id" : "U10",
+  "userName" : "saf",
+  "password" : "Pragnya!1234",
+  "role" : "BUILDER"
 } ]

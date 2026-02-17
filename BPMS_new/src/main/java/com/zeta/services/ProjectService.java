@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import com.zeta.Dao.ProjectDao;
 import com.zeta.Dao.TaskDao;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 public class ProjectService {
 
     private final ProjectDao projectDao = new ProjectDao();
@@ -36,15 +38,30 @@ public class ProjectService {
         }
         projectCounter = projects.size() + 1;
     }
-    //projectservice
     public synchronized void createProject(String id, String name, String description,
                                            String start, String end, String clientId,PROJECT_STATUS status) {
         id = generateProjectId();
-        Project project = new Project(id, name, description, start, end, clientId,status);
-        projects.put(id, project);
-        System.out.println("Project Created Successfully!");
-        projectDao.saveProjects(projects);
+        try {
+            LocalDate startDate = LocalDate.parse(start);  // format: yyyy-MM-dd
+            LocalDate endDate = LocalDate.parse(end);
+            if (endDate.isBefore(LocalDate.now())) {
+                System.out.println("End date cannot be in the past!");
+                return;
+            }
+            if (endDate.isBefore(startDate)) {
+                System.out.println("End date cannot be before start date!");
+                return;
+            }
+            Project project = new Project(id, name, description, startDate, endDate, clientId, status);
+            projects.put(id, project);
+            projectDao.saveProjects(projects);
+            System.out.println("Project Created Successfully!");
+
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid date format! Use yyyy-MM-dd");
+        }
     }
+
     public synchronized void updateStatus(String projectId, PROJECT_STATUS newStatus) {
         Project project = projects.get(projectId);
         if (project != null) {

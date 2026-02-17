@@ -9,9 +9,9 @@ import com.zeta.services.AuthService;
 import com.zeta.services.ProjectService;
 
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.*;
-
-
 
 public class App {
 
@@ -109,8 +109,22 @@ public class App {
             System.out.println("Login failed (wrong role or credentials)");
         }
     }
+    private static String readValidDate(Scanner scanner, String message) {
 
-     private static  ProjectService service = new ProjectService();
+        while (true) {
+            System.out.println(message + " (yyyy-MM-dd): ");
+            String input = scanner.nextLine().trim();
+
+            try {
+                LocalDate.parse(input); // just checking format
+                return input;
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format! Please use yyyy-MM-dd");
+            }
+        }
+    }
+
+    private static  ProjectService service = new ProjectService();
     private static void projectManagerMenu(Scanner scanner,User user) {
 
         while (true) {
@@ -132,10 +146,9 @@ public class App {
                     String name=scanner.nextLine();
                     System.out.println("Enter description");
                     String description=scanner.nextLine();
-                    System.out.println("Enter start date");
-                    String startDate=scanner.nextLine();
-                    System.out.println("Enter end date");
-                    String endDate=scanner.nextLine();
+                    scanner.nextLine();
+                    String startDate = readValidDate(scanner, "Enter start date");
+                    String endDate = readValidDate(scanner, "Enter end date");
                     System.out.println("Enter client id");
                     String clientid=scanner.nextLine();
                     System.out.println("Enter project status");

@@ -4,14 +4,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
+
+
 
 public class Project {
 
     private String projectId;
     private String name;
     private String description;
-    private String startDate;
-    private String endDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String clientId;
     private String projectManagerId;
     private String builderId;
@@ -20,7 +23,7 @@ public class Project {
     private List<Task> tasks = new ArrayList<>();
 
     public Project(String projectId, String name, String description,
-                   String startDate, String endDate,
+                   LocalDate startDate, LocalDate endDate,
                    String clientId,PROJECT_STATUS status) {
 
         this.projectId = projectId;
@@ -46,11 +49,11 @@ public class Project {
         return description;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
@@ -72,6 +75,13 @@ public class Project {
 
     public void setBuilderName(String builderName) {
         this.builderName = builderName;
+    }
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
 
