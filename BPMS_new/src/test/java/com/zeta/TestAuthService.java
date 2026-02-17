@@ -51,5 +51,25 @@ public class TestAuthService {
         assertEquals(ROLE_TYPE.BUILDER, otherUser.getRole());
     }
 
+    @Test
+    public void testIsValidPassword(){
+        boolean result=authService.isValidPassword("Mohan@12345");
+        assertEquals(true,result);
+    }
+
+    @Test
+    public void testIsNotValidPassword(){
+        boolean result=authService.isValidPassword("1234");
+        assertEquals(false,result);
+    }
+
+    @Test
+    public void testUserNameExistence(){
+        boolean result=authService.usernameExists("pragnyak");
+        assertEquals(false,result);
+    }
+
+
+
 
 }
