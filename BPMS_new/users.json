@@ -1,19 +1,7 @@
 [ {
   "id" : "U1",
-  "name" : "pranu",
-  "password" : "Pranu@123",
-  "role" : "PROJECTMANAGER",
-  "userName" : "pranu"
-}, {
-  "id" : "U2",
-  "name" : "manu",
-  "password" : "Manu@123",
+  "name" : "dsa",
+  "password" : "Pragny@123",
   "role" : "BUILDER",
-  "userName" : "manu"
-}, {
-  "id" : "U3",
-  "name" : "pranu1",
-  "password" : "Pranu@456",
-  "role" : "BUILDER",
-  "userName" : "pranu1"
+  "userName" : "dsa"
 } ]

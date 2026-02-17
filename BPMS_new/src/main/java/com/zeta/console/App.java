@@ -390,7 +390,9 @@ public class App {
                 System.out.println("file is empty");
                 return;
             }
-            users = mapper.readValue(file, new TypeReference<List<User>>() {});
+            List<User> loadedUsers=mapper.readValue(file, new TypeReference<List<User>>() {});
+            users.clear();
+            users.addAll(loadedUsers);
             System.out.println("File path: " + file.getAbsolutePath());
         } catch (IOException e) {
             System.out.println("Error loading data: " + e.getMessage());
