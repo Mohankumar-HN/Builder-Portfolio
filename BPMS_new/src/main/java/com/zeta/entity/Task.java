@@ -26,6 +26,10 @@ public class Task {
         return id;
     }
 
+    public TASK_STATUS getStatus() {
+        return status;
+    }
+
     public void setStatus(TASK_STATUS status) {
         this.status = status;
     }

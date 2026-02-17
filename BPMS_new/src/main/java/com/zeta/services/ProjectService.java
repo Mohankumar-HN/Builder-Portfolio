@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProjectService {
-    public static final Map<String,Project> projects = new HashMap<>();
+    public final Map<String,Project> projects = new HashMap<>();
     private static int projectCounter = 1;
     private String generateProjectId() {
         return "P" + (projectCounter++);
@@ -139,5 +139,8 @@ public class ProjectService {
         if (!found) {
             System.out.println("No projects found for this client.");
         }
+    }
+    public Map<String,Project> getProjects(){
+        return projects;
     }
 }
