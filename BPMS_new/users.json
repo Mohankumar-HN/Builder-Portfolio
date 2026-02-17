@@ -1,7 +1,11 @@
 [ {
   "id" : "U1",
-  "name" : "dsa",
-  "password" : "Pragny@123",
-  "role" : "BUILDER",
-  "userName" : "dsa"
+  "userName" : "mohan",
+  "password" : "Mohan@12344",
+  "role" : "BUILDER"
+}, {
+  "id" : "U2",
+  "userName" : "bill",
+  "password" : "Bill@12345",
+  "role" : "BUILDER"
 } ]

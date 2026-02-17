@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class App {
-    private static final String FILE_NAME = "users.json";
+    private static final String FILE_NAME = System.getProperty("user.dir")+"/users.json";
     private static final ObjectMapper mapper = new ObjectMapper();
     public static List<User> users = Collections.synchronizedList(new ArrayList<>());
 
@@ -305,6 +305,8 @@ public class App {
 
     private static void saveToFile () {
         try {
+            File file = new File(FILE_NAME);
+            System.out.println("Saving to: " + file.getAbsolutePath());
             mapper.writerWithDefaultPrettyPrinter()
                     .writeValue(new File(FILE_NAME), users);
         } catch (IOException e) {
@@ -381,6 +383,7 @@ public class App {
     private static void loadFromFile () {
         try {
             File file = new File(FILE_NAME);
+            System.out.println("Loading from: " + file.getAbsolutePath());
             if(!file.exists()){
                 System.out.println("File not found");
                 file.createNewFile();

@@ -1,16 +1,38 @@
 package com.zeta.services;
 
+import com.zeta.console.App;
 import com.zeta.entity.User;
 
 import static com.zeta.console.App.users;
 
 
 public class AuthService {
-    private static int userCounter = 1;
-
     public String generateUserId() {
-        return "U" + (userCounter++);
+
+        int max = 0;
+
+        for(User user : App.users){
+
+            String id = user.getId();
+
+            if(id != null && id.startsWith("U")){
+
+                int num = Integer.parseInt(id.substring(1));
+
+                if(num > max){
+
+                    max = num;
+
+                }
+
+            }
+
+        }
+
+        return "U" + (max + 1);
+
     }
+
 
     public boolean register(String id){
         for(User user: users){
