@@ -7,12 +7,19 @@ import com.zeta.entity.Task;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import com.zeta.Dao.ProjectDao;
 public class ProjectService {
-    public final Map<String,Project> projects = new HashMap<>();
+
+    private final ProjectDao projectDao = new ProjectDao();
+    private Map<String, Project> projects;
+
     private static int projectCounter = 1;
     private String generateProjectId() {
         return "P" + (projectCounter++);
+    }
+    public ProjectService() {
+        projects = projectDao.loadProjects();
+        projectCounter = projects.size() + 1;
     }
     //projectservice
     public synchronized void createProject(String id, String name, String description,

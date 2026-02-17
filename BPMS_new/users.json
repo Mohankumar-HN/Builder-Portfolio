@@ -23,4 +23,9 @@
   "userName" : "john",
   "password" : "John@12345",
   "role" : "PROJECTMANAGER"
+}, {
+  "id" : "U6",
+  "userName" : "Mohankumar",
+  "password" : "Mohan@12345",
+  "role" : "CLIENT"
 } ]

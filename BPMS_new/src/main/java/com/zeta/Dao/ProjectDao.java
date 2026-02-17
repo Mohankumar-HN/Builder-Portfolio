@@ -63,3 +63,44 @@
 //        }
 //    }
 //}
+package com.zeta.Dao;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zeta.entity.Project;
+import com.zeta.entity.User;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+
+public class ProjectDao {
+    private static final String FILE_NAME = System.getProperty("user.dir")+"/projects.json";
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    public Map<String,Project> projects = new HashMap<>();
+
+    public Map<String, Project> loadProjects() {
+        File file = new File(FILE_NAME);
+        if (!file.exists()) {
+            return new HashMap<>();
+        }
+        try {
+            return objectMapper.readValue(file,
+                    new TypeReference<Map<String, Project>>() {});
+        } catch (IOException ioException) {
+            System.out.println("Error loading projects : "+ioException.getMessage());
+            return new HashMap<>();
+        }
+    }
+    public void saveProjects(Map<String, Project> projects) {
+        try {
+            File file = new File(FILE_NAME);
+            objectMapper.writerWithDefaultPrettyPrinter()
+                    .writeValue(new File(FILE_NAME), projects);
+        } catch (IOException ioException) {
+            System.out.println("Error saving data: " + ioException.getMessage());
+        }
+
+    }
+}
+
