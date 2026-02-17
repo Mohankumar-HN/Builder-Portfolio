@@ -1,24 +1,24 @@
 package com.zeta.console;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.zeta.Dao.UserDao;
 import com.zeta.entity.PROJECT_STATUS;
 import com.zeta.entity.ROLE_TYPE;
 import com.zeta.entity.User;
 import com.zeta.services.AuthService;
 import com.zeta.services.ProjectService;
 
-import java.io.File;
-import java.io.IOException;
+
 import java.util.*;
 
+
+
 public class App {
-    private static final String FILE_NAME = System.getProperty("user.dir")+"/users.json";
-    private static final ObjectMapper mapper = new ObjectMapper();
-    public static List<User> users = Collections.synchronizedList(new ArrayList<>());
+
+    private static final UserDao userDao = new UserDao();
 
     public static void main(String[] args) {
-        loadFromFile();
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("----Welcome to Builder Portfolio system----");
 
@@ -34,7 +34,6 @@ public class App {
                 switch (n) {
                     case 1:
                         addUser(scanner);
-                        saveToFile();
                         break;
                     case 2:
                         login(scanner);
@@ -303,16 +302,7 @@ public class App {
         }
     }
 
-    private static void saveToFile () {
-        try {
-            File file = new File(FILE_NAME);
-            System.out.println("Saving to: " + file.getAbsolutePath());
-            mapper.writerWithDefaultPrettyPrinter()
-                    .writeValue(new File(FILE_NAME), users);
-        } catch (IOException e) {
-            System.out.println("Error saving data: " + e.getMessage());
-        }
-    }
+
 
     private static void addUser (Scanner scanner){
         AuthService authService = new AuthService();
@@ -376,32 +366,11 @@ public class App {
             System.out.println("User already registered");
             return;
         }
-        users.add(new User(id,username, password, role));
+        userDao.addUser(new User(id,username, password, role));
         System.out.println("Successfull Registration");
     }
 
-    private static void loadFromFile () {
-        try {
-            File file = new File(FILE_NAME);
-            System.out.println("Loading from: " + file.getAbsolutePath());
-            if(!file.exists()){
-                System.out.println("File not found");
-                file.createNewFile();
-                return;
-            }
-            if(file.length()==0){
-                System.out.println("file is empty");
-                return;
-            }
-            List<User> loadedUsers=mapper.readValue(file, new TypeReference<List<User>>() {});
-            users.clear();
-            users.addAll(loadedUsers);
-            System.out.println("File path: " + file.getAbsolutePath());
-        } catch (IOException e) {
-            System.out.println("Error loading data: " + e.getMessage());
-        }
 
-    }
 }
 
 

@@ -1,5 +1,6 @@
 package com.zeta;
 
+import com.zeta.Dao.UserDao;
 import com.zeta.console.App;
 import com.zeta.entity.ROLE_TYPE;
 import com.zeta.entity.User;
@@ -14,7 +15,7 @@ public class TestAuthService {
     @BeforeEach
     void setUp() {
         authService = new AuthService();
-        App.users.add(new User("1", "Pragnya", "1234", ROLE_TYPE.PROJECTMANAGER));
+        UserDao.users.add(new User("1", "Pragnya", "1234", ROLE_TYPE.PROJECTMANAGER));
     }
     @Test
     public void testRegisterNewUser() {
@@ -30,7 +31,7 @@ public class TestAuthService {
     public void testLoginSuccess() {
         User user = authService.logIn("Pragnya", "1234");
         assertNotNull(user);
-        assertEquals("Pragnya", user.getName());
+        assertEquals("Pragnya", user.getUserName());
     }
     @Test
     public void testLoginWrongPassword() {
@@ -44,7 +45,7 @@ public class TestAuthService {
     }
     @Test
     public void testLoginMultipleUsers() {
-        App.users.add(new User("2", "mohan", "abcd", ROLE_TYPE.BUILDER));
+        UserDao.users.add(new User("2", "mohan", "abcd", ROLE_TYPE.BUILDER));
         User otherUser = authService.logIn("mohan", "abcd");
         assertNotNull(otherUser);
         assertEquals(ROLE_TYPE.BUILDER, otherUser.getRole());

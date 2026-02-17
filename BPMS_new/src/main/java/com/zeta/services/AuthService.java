@@ -1,9 +1,10 @@
 package com.zeta.services;
 
+import com.zeta.Dao.UserDao;
 import com.zeta.console.App;
 import com.zeta.entity.User;
 
-import static com.zeta.console.App.users;
+import static com.zeta.Dao.UserDao.users;
 
 
 public class AuthService {
@@ -11,7 +12,7 @@ public class AuthService {
 
         int max = 0;
 
-        for(User user : App.users){
+        for(User user : UserDao.users){
 
             String id = user.getId();
 

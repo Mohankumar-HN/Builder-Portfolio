@@ -8,4 +8,19 @@
   "userName" : "bill",
   "password" : "Bill@12345",
   "role" : "BUILDER"
+}, {
+  "id" : "U3",
+  "userName" : "pragnya",
+  "password" : "Pragnya@12345",
+  "role" : "PROJECTMANAGER"
+}, {
+  "id" : "U4",
+  "userName" : "adam",
+  "password" : "Adam@12345",
+  "role" : "BUILDER"
+}, {
+  "id" : "U5",
+  "userName" : "john",
+  "password" : "John@12345",
+  "role" : "PROJECTMANAGER"
 } ]
