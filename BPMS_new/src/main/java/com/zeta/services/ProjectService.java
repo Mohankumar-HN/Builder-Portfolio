@@ -14,6 +14,7 @@ public class ProjectService {
     private String generateProjectId() {
         return "P" + (projectCounter++);
     }
+    //projectservice
     public synchronized void createProject(String id, String name, String description,
                                            String start, String end, String clientId,PROJECT_STATUS status) {
         id = generateProjectId();

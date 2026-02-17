@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class TestProjectService {
@@ -32,6 +33,10 @@ public class TestProjectService {
         projectService.assignBuilder(projectId,"BuilderA");
         assertEquals("BuilderA",
                 projectService.projects.get(projectId).getBuilderName());
+        assertThrows(ExpectedExceptionType.class, () -> {
+            // Code that should throw the exception
+        });
+
     }
     @Test
     public void testCreateTask() {
@@ -40,6 +45,7 @@ public class TestProjectService {
                 "Start digging", "BuilderA");
         assertEquals(1,
                 projectService.projects.get(projectId).getTasks().size());
+
     }
 //    @Test
 //    void testUpdateTaskStatus() {

@@ -131,7 +131,7 @@ public class App {
                     System.out.println("Enter project name");
                     String name=scanner.nextLine();
                     System.out.println("Enter description");
-                    String descript=scanner.nextLine();
+                    String description=scanner.nextLine();
                     System.out.println("Enter start date");
                     String startDate=scanner.nextLine();
                     System.out.println("Enter end date");
@@ -140,7 +140,7 @@ public class App {
                     String clientid=scanner.nextLine();
                     System.out.println("Enter project status");
                     PROJECT_STATUS status= PROJECT_STATUS.valueOf(scanner.next());
-                    service.createProject(id,name,descript,startDate,endDate,clientid,status);
+                    service.createProject(id,name,description,startDate,endDate,clientid,status);
                     break;
                 case 2:
                     System.out.println("Enter project id");
