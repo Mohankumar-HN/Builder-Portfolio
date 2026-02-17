@@ -47,7 +47,7 @@ public class Project {
     }
 
     public void setBuilderName(String builderName) {
-        this.builderId = builderName;
+        this.builderName = builderName;
     }
 
 
