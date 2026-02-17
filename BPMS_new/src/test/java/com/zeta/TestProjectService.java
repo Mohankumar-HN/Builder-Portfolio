@@ -1,68 +1,192 @@
+//package com.zeta;
+//
+//import com.zeta.entity.PROJECT_STATUS;
+//import com.zeta.entity.Project;
+//import com.zeta.entity.TASK_STATUS;
+//import com.zeta.services.ProjectService;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
+//
+//
+//import static junit.framework.Assert.assertEquals;
+//import static org.junit.jupiter.api.Assertions.assertThrows;
+//
+//
+//public class TestProjectService {
+//
+//    ProjectService projectService;
+//    @BeforeEach
+//    void setUp(){
+//        projectService=new ProjectService();
+//        projectService.createProject("P6","skyrise","6 storage buildings","12-02-2026","12-09-2026",
+//                "C1", PROJECT_STATUS.UPCOMING);
+//
+//    }
+//    @Test
+//    public void testCreateProject(){
+//        assertEquals(1,projectService.getProjects().size());
+//    }
+//
+//    @Test
+//    public void testAssignBuilder(){
+//        String projectId = projectService.projects.keySet().iterator().next();
+//        projectService.assignBuilder(projectId,"BuilderA");
+//        assertEquals("BuilderA",
+//                projectService.projects.get(projectId).getBuilderName());
+//
+//    }
+//    @Test
+//    public void testCreateTask() {
+//        String projectId = projectService.projects.keySet().iterator().next();
+//        projectService.createTask(projectId, null, "Foundation Work",
+//                "Start digging", "BuilderA");
+//        assertEquals(1,
+//                projectService.projects.get(projectId).getTasks().size());
+//
+//    }
+//    @Test
+//    void testUpdateTaskStatus() {
+//
+//    }
+//
+//
+//
+//
+//
+//
+//}
 package com.zeta;
 
 import com.zeta.entity.PROJECT_STATUS;
-import com.zeta.entity.Project;
 import com.zeta.entity.TASK_STATUS;
 import com.zeta.services.ProjectService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import static junit.framework.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestProjectService {
 
     ProjectService projectService;
+    String projectId;
+
     @BeforeEach
-    void setUp(){
-        projectService=new ProjectService();
-        projectService.createProject("P6","skyrise","6 storage buildings","12-02-2026","12-09-2026",
-                "C1", PROJECT_STATUS.UPCOMING);
-
-    }
-    @Test
-    public void testCreateProject(){
-        assertEquals(1,projectService.getProjects().size());
+    void setUp() {
+        projectService = new ProjectService();
+        projectService.createProject(null, "Skyrise", "6 storage buildings", "12-02-2026",
+                "12-09-2026", "C1", PROJECT_STATUS.UPCOMING);
+        projectId = projectService.getProjects().keySet().iterator().next();
     }
 
     @Test
-    public void testAssignBuilder(){
-        String projectId = projectService.projects.keySet().iterator().next();
-        projectService.assignBuilder(projectId,"BuilderA");
+    void testCreateProject() {
+        assertEquals(1, projectService.getProjects().size());
+    }
+
+    @Test
+    void testUpdateStatus() {
+        projectService.updateStatus(projectId, PROJECT_STATUS.COMPLETED);
+        assertEquals(PROJECT_STATUS.COMPLETED,
+                projectService.getProjects().get(projectId).getStatus());
+    }
+
+    @Test
+    void testUpdateStatusProjectNotFound() {
+        projectService.updateStatus("INVALID", PROJECT_STATUS.COMPLETED);
+    }
+
+    @Test
+    void testAssignBuilder() {
+        projectService.assignBuilder(projectId, "BuilderA");
         assertEquals("BuilderA",
-                projectService.projects.get(projectId).getBuilderName());
-        assertThrows(ExpectedExceptionType.class, () -> {
-            // Code that should throw the exception
-        });
-
+                projectService.getProjects().get(projectId).getBuilderName());
     }
+
     @Test
-    public void testCreateTask() {
-        String projectId = projectService.projects.keySet().iterator().next();
+    void testAssignBuilderProjectNotFound() {
+        projectService.assignBuilder("INVALID", "BuilderA");
+    }
+
+    @Test
+    void testCreateTask() {
         projectService.createTask(projectId, null, "Foundation Work",
                 "Start digging", "BuilderA");
         assertEquals(1,
-                projectService.projects.get(projectId).getTasks().size());
-
+                projectService.getProjects().get(projectId).getTasks().size());
     }
-//    @Test
-//    void testUpdateTaskStatus() {
-//        String projectId = projectService.projects.keySet().iterator().next();
-//
-//        String taskId = projectService.projects
-//                .get(projectId).getTasks().get(0).getTaskId();
-//
-//        projectService.updateTaskStatus(projectId, taskId, "BuilderA");
-//        assertEquals(TASK_STATUS.Completed,
-//                projectService.projects.get(projectId)
-//                        .getTasks().get(0).getStatus());
-//    }
 
+    @Test
+    void testCreateTaskProjectNotFound() {
+        projectService.createTask("INVALID", null, "Task",
+                "Desc", "BuilderA");
+    }
+    @Test
+    void testUpdateTaskStatusSuccess() {
+        projectService.createTask(projectId, null,
+                "Plumbing",
+                "Install pipes",
+                "BuilderA");
 
+        String taskId = projectService.getProjects().get(projectId).getTasks().get(0).getTaskId();
+        projectService.updateTaskStatus(projectId, taskId, "BuilderA");
+        assertEquals(TASK_STATUS.Completed,
+                projectService.getProjects()
+                        .get(projectId)
+                        .getTasks()
+                        .get(0)
+                        .getStatus());
+    }
+    @Test
+    void testUpdateTaskStatusWrongBuilder() {
+        projectService.createTask(projectId, null, "Electrical",
+                "Wiring", "BuilderA");
 
+        String taskId = projectService.getProjects().get(projectId).getTasks().get(0).getTaskId();
 
+        projectService.updateTaskStatus(projectId, taskId, "WrongBuilder");
 
+        assertNotEquals(TASK_STATUS.Completed,
+                projectService.getProjects().get(projectId).getTasks().get(0).getStatus());
+    }
+    @Test
+    void testDeleteProject() {
+        projectService.deleteProject(projectId);
+        assertTrue(projectService.getProjects().isEmpty());
+    }
 
+    @Test
+    void testDeleteProjectNotFound() {
+        projectService.deleteProject("INVALID");
+    }
+
+    @Test
+    void testShowClientProjects() {
+        projectService.showClientProjects("C1");
+    }
+
+    @Test
+    void testShowBuilderProjects() {
+        projectService.assignBuilder(projectId, "BuilderA");
+        projectService.showBuilderProjects("BuilderA");
+    }
+
+    @Test
+    void testShowBuilderTasks() {
+        projectService.createTask(projectId, null,
+                "Roof Work",
+                "Concrete",
+                "BuilderA");
+
+        projectService.showBuilderTasks("BuilderA");
+    }
+
+    @Test
+    void testShowAllTasks() {
+        projectService.createTask(projectId, null,
+                "Painting",
+                "Wall paint",
+                "BuilderA");
+
+        projectService.showAllTasks();
+    }
 }
