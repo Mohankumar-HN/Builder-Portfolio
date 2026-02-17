@@ -77,7 +77,7 @@ public class TestProjectService {
                 "12-09-2026", "C1", PROJECT_STATUS.UPCOMING);
         projectId = projectService.getProjects().keySet().iterator().next();
     }
-
+//checking git conflicts
     @Test
     void testCreateProject() {
         assertEquals(1, projectService.getProjects().size());
