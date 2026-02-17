@@ -4,14 +4,15 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zeta.entity.Project;
 import com.zeta.entity.User;
-
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 public class ProjectDao {
     private static final String FILE_NAME = System.getProperty("user.dir")+"/projects.json";
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
+
     public Map<String,Project> projects = new HashMap<>();
 
     public Map<String, Project> loadProjects() {

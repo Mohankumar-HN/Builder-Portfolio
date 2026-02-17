@@ -26,7 +26,6 @@ public class ProjectService {
     public ProjectService() {
         projects = projectDao.loadProjects();
         tasksByProject = taskDao.loadTasks();
-        // populate project tasks from tasksByProject
         for (Map.Entry<String, List<Task>> entry : tasksByProject.entrySet()) {
             String pid = entry.getKey();
             List<Task> ts = entry.getValue();
@@ -39,7 +38,7 @@ public class ProjectService {
         projectCounter = projects.size() + 1;
     }
     public synchronized void createProject(String id, String name, String description,
-                                           String start, String end, String clientId,PROJECT_STATUS status) {
+                                           String start, String end, String clientId,String projectManagerId,PROJECT_STATUS status) {
         id = generateProjectId();
         try {
             LocalDate startDate = LocalDate.parse(start);  // format: yyyy-MM-dd
@@ -52,7 +51,7 @@ public class ProjectService {
                 System.out.println("End date cannot be before start date!");
                 return;
             }
-            Project project = new Project(id, name, description, startDate, endDate, clientId, status);
+            Project project = new Project(id, name, description, startDate, endDate, clientId,projectManagerId, status);
             projects.put(id, project);
             projectDao.saveProjects(projects);
             System.out.println("Project Created Successfully!");
@@ -109,15 +108,15 @@ public class ProjectService {
     }
     private static int taskCounter = 1;
 
-    public String generateTaskId() {
+    public synchronized String generateTaskId() {
         return "T" + (taskCounter++);
     }
 
-    public synchronized void createTask(String projectId, String taskId, String taskName,
+    public synchronized void createTask(String projectId, String taskName,
                                         String description, String builderName) {
         Project project = projects.get(projectId);
         if (project != null) {
-            taskId=generateTaskId();
+            String taskId=generateTaskId();
             Task task = new Task(taskId, taskName,
                     description, builderName);
             project.getTasks().add(task);

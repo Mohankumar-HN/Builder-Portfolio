@@ -17,7 +17,7 @@ public class TestProjectService {
     void setUp() {
         projectService = new ProjectService();
         projectService.createProject(null, "Skyrise", "6 storage buildings", "12-02-2026",
-                "12-09-2026", "C1", PROJECT_STATUS.UPCOMING);
+                "12-09-2026", "C1", "null",PROJECT_STATUS.UPCOMING);
         projectId = projectService.getProjects().keySet().iterator().next();
     }
 //checking git conflicts
@@ -52,7 +52,7 @@ public class TestProjectService {
 
     @Test
     void testCreateTask() {
-        projectService.createTask(projectId, null, "Foundation Work",
+        projectService.createTask(projectId, "Foundation Work",
                 "Start digging", "BuilderA");
         assertEquals(1,
                 projectService.getProjects().get(projectId).getTasks().size());
@@ -60,12 +60,12 @@ public class TestProjectService {
 
     @Test
     void testCreateTaskProjectNotFound() {
-        projectService.createTask("INVALID", null, "Task",
+        projectService.createTask("INVALID", "Task",
                 "Desc", "BuilderA");
     }
     @Test
     void testUpdateTaskStatusSuccess() {
-        projectService.createTask(projectId, null,
+        projectService.createTask(projectId,
                 "Plumbing",
                 "Install pipes",
                 "BuilderA");
@@ -77,7 +77,7 @@ public class TestProjectService {
     }
     @Test
     void testUpdateTaskStatusWrongBuilder() {
-        projectService.createTask(projectId, null, "Electrical",
+        projectService.createTask(projectId,  "Electrical",
                 "Wiring", "BuilderA");
 
         String taskId = projectService.getProjects().get(projectId).getTasks().get(0).getTaskId();
@@ -111,14 +111,14 @@ public class TestProjectService {
 
     @Test
     void testShowBuilderTasks() {
-        projectService.createTask(projectId, null, "Roof Work", "Concrete", "BuilderA");
+        projectService.createTask(projectId, "Roof Work", "Concrete", "BuilderA");
 
         projectService.showBuilderTasks("BuilderA");
     }
 
     @Test
     void testShowAllTasks() {
-        projectService.createTask(projectId, null, "Painting", "Wall paint", "BuilderA");
+        projectService.createTask(projectId, "Painting", "Wall paint", "BuilderA");
 
         projectService.showAllTasks();
     }

@@ -24,7 +24,7 @@ public class Project {
 
     public Project(String projectId, String name, String description,
                    LocalDate startDate, LocalDate endDate,
-                   String clientId,PROJECT_STATUS status) {
+                   String clientId,String projectManagerId,PROJECT_STATUS status) {
 
         this.projectId = projectId;
         this.name = name;
@@ -32,7 +32,7 @@ public class Project {
         this.startDate = startDate;
         this.endDate = endDate;
         this.clientId = clientId;
-//        this.projectManagerId = projectManagerId;
+        this.projectManagerId = projectManagerId;
         this.status = status;
     }
     public Project(){};

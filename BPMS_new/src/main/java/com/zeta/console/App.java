@@ -14,9 +14,7 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 public class App {
-
     private static final UserDao userDao = new UserDao();
-
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
@@ -146,14 +144,13 @@ public class App {
                     String name=scanner.nextLine();
                     System.out.println("Enter description");
                     String description=scanner.nextLine();
-                    scanner.nextLine();
                     String startDate = readValidDate(scanner, "Enter start date");
                     String endDate = readValidDate(scanner, "Enter end date");
                     System.out.println("Enter client id");
                     String clientid=scanner.nextLine();
                     System.out.println("Enter project status");
                     PROJECT_STATUS status= PROJECT_STATUS.valueOf(scanner.next());
-                    service.createProject(id,name,description,startDate,endDate,clientid,status);
+                    service.createProject(id,name,description,startDate,endDate,clientid,user.getId(),status);
                     break;
                 case 2:
                     System.out.println("Enter project id");
@@ -228,7 +225,6 @@ public class App {
                     String builderName = scanner.nextLine();
 
                     service.createTask(projectId,
-                            taskId,
                             taskName,
                             taskDesc,
                             builderName);

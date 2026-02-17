@@ -1,10 +1,10 @@
 {
   "P1" : {
     "projectId" : "P1",
-    "name" : "sattva",
-    "description" : "building for zeta",
-    "startDate" : "12-12-2026",
-    "endDate" : "12-12-2028",
+    "name" : "sf",
+    "description" : "safd",
+    "startDate" : [ 2022, 9, 8 ],
+    "endDate" : [ 2027, 9, 9 ],
     "clientId" : "U6",
     "projectManagerId" : null,
     "builderId" : null,
@@ -13,8 +13,58 @@
     "tasks" : [ {
       "taskId" : "T2",
       "name" : "interior",
+      "description" : "jdfhjkhdls",
+      "assignedBuilder" : "mohan",
+      "status" : "Upcoming"
+    }, {
+      "taskId" : "T2",
+      "name" : "interior",
       "description" : "kfnsdklnk",
       "assignedBuilder" : "mohan",
+      "status" : "Upcoming"
+    } ]
+  },
+  "P2" : {
+    "projectId" : "P2",
+    "name" : "sad",
+    "description" : "asd",
+    "startDate" : [ 2023, 9, 9 ],
+    "endDate" : [ 2029, 9, 9 ],
+    "clientId" : "U6",
+    "projectManagerId" : null,
+    "builderId" : null,
+    "status" : "UPCOMING",
+    "builderName" : null,
+    "tasks" : [ ]
+  },
+  "P3" : {
+    "projectId" : "P3",
+    "name" : "asd",
+    "description" : "asd",
+    "startDate" : [ 2023, 9, 9 ],
+    "endDate" : [ 2027, 9, 9 ],
+    "clientId" : "U6",
+    "projectManagerId" : "U3",
+    "builderId" : null,
+    "status" : "UPCOMING",
+    "builderName" : "adam",
+    "tasks" : [ {
+      "taskId" : "T3",
+      "name" : "flooring",
+      "description" : "flooring need to be done in 3 days",
+      "assignedBuilder" : "adam",
+      "status" : "Upcoming"
+    }, {
+      "taskId" : "T2",
+      "name" : "flooring",
+      "description" : "kjdfhljkas",
+      "assignedBuilder" : "adam",
+      "status" : "Upcoming"
+    }, {
+      "taskId" : "T2",
+      "name" : "flooring",
+      "description" : "kjghrdjk",
+      "assignedBuilder" : "adam",
       "status" : "Upcoming"
     } ]
   }
