@@ -1,9 +1,7 @@
 
 package com.zeta.services;
-import com.zeta.entity.PROJECT_STATUS;
-import com.zeta.entity.Project;
-import com.zeta.entity.TASK_STATUS;
-import com.zeta.entity.Task;
+import com.zeta.Dao.UserDao;
+import com.zeta.entity.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,8 +10,11 @@ import com.zeta.Dao.ProjectDao;
 import com.zeta.Dao.TaskDao;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-public class ProjectService {
+import java.util.Scanner;
 
+
+public class ProjectService {
+    private final UserDao userDao = new UserDao();
     private final ProjectDao projectDao = new ProjectDao();
     private final TaskDao taskDao = new TaskDao();
     private Map<String, Project> projects;
@@ -96,15 +97,24 @@ public class ProjectService {
             System.out.println("project not found");
         }
     }
-    public  synchronized void assignBuilder(String id,String name){
+    public  synchronized boolean assignBuilder(String id,String name){
         Project project=projects.get(id);
-        if(project!=null){
-            project.setBuilderName(name);
-            System.out.println("Builder assigned successfully");
-            projectDao.saveProjects(projects);
-        }else{
+        if(project==null) {
             System.out.println("project not found");
+            return false;
         }
+        User builder = userDao.getUserByName(name);
+
+        if (builder == null || builder.getRole() != ROLE_TYPE.BUILDER) {
+            System.out.println("Invalid builder! User not found or not a BUILDER.");
+            return false;
+        }
+
+        project.setBuilderName(builder.getUserName());
+        projectDao.saveProjects(projects);
+
+        System.out.println("Builder assigned successfully!");
+        return true;
     }
     private static int taskCounter = 1;
 
@@ -117,6 +127,7 @@ public class ProjectService {
         Project project = projects.get(projectId);
         if (project != null) {
             String taskId=generateTaskId();
+            System.out.println("Tas Id : "+taskId);
             Task task = new Task(taskId, taskName,
                     description, builderName);
             project.getTasks().add(task);
@@ -138,17 +149,31 @@ public class ProjectService {
         }
     }
     public synchronized void showBuilderProjects(String builderName) {
+
         boolean found = false;
+
         for (Project project : projects.values()) {
+
             if (builderName.equals(project.getBuilderName())) {
-                System.out.println(project);
+
+                System.out.println("\n========== ASSIGNED PROJECT ==========");
+                System.out.println("Project ID     : " + project.getProjectId());
+                System.out.println("Project Name   : " + project.getName());
+                System.out.println("Description    : " + project.getDescription());
+                System.out.println("Start Date     : " + project.getStartDate());
+                System.out.println("End Date       : " + project.getEndDate());
+                System.out.println("Status         : " + project.getStatus());
+                System.out.println("======================================\n");
+
                 found = true;
             }
         }
+
         if (!found) {
             System.out.println("No projects assigned.");
         }
     }
+
     public synchronized void showBuilderTasks(String builderName) {
         boolean found = false;
         for (Project project : projects.values()) {
@@ -164,46 +189,73 @@ public class ProjectService {
             System.out.println("No tasks assigned.");
         }
     }
-    public synchronized void updateTaskStatus(String projectId, String taskId, String builderName) {
+    public synchronized void updateTaskStatus(
+            String projectId,
+            String taskId,
+            String builderName,
+            TASK_STATUS newStatus) {
+
         Project project = projects.get(projectId);
+
         if (project == null) {
             System.out.println("Project not found.");
             return;
         }
+
         for (Task task : project.getTasks()) {
-            if (task.getTaskId().equals(taskId) && task.getAssignedBuilder().equals(builderName)) {
-                task.setStatus(TASK_STATUS.Completed);
-                System.out.println("Task marked as completed!");
+
+            if (task.getTaskId().equals(taskId) &&
+                    task.getAssignedBuilder().equals(builderName)) {
+
+                task.setStatus(newStatus);
+
                 projectDao.saveProjects(projects);
-                // update tasks.json
-                List<Task> ts = tasksByProject.get(projectId);
-                if (ts != null) {
-                    for (Task t : ts) {
-                        if (t.getTaskId().equals(taskId)) {
-                            t.setStatus(TASK_STATUS.Completed);
-                            break;
-                        }
-                    }
-                    taskDao.saveTasks(tasksByProject);
-                }
+                taskDao.saveTasks(tasksByProject);
+
+                System.out.println("Task status updated successfully!");
                 return;
             }
         }
+
         System.out.println("Task not found or not assigned to you.");
     }
+
+
     public synchronized void showClientProjects(String clientId) {
         boolean found = false;
         for (Project project : projects.values()) {
             if (clientId.equals(project.getClientId())) {
-                System.out.println(project);
+                System.out.println("=================================");
+                System.out.println("Project ID: " + project.getProjectId());
+                System.out.println("Project Name: " + project.getName());
+                System.out.println("Description: " + project.getDescription());
+                System.out.println("Start Date: " + project.getStartDate());
+                System.out.println("End Date: " + project.getEndDate());
+                System.out.println("Project Manager ID: " + project.getProjectManagerId());
+                System.out.println("Assigned Builder: " + project.getBuilderName());
+                System.out.println("Project Status: " + project.getStatus());
+                System.out.println("=================================");
                 found = true;
             }
         }
+
         if (!found) {
             System.out.println("No projects found for this client.");
         }
     }
+
     public Map<String,Project> getProjects(){
         return projects;
     }
+    public boolean hasTasksForBuilder(String builderName) {
+        for (Project p : projects.values()) {
+            for (Task t : p.getTasks()) {
+                if (t.getAssignedBuilder().equals(builderName)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

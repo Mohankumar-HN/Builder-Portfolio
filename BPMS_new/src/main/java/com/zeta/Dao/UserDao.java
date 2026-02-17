@@ -14,20 +14,16 @@ public class UserDao {
     private static final String FILE_NAME = System.getProperty("user.dir")+"/users.json";
     private static final ObjectMapper mapper = new ObjectMapper();
     public static List<User> users = Collections.synchronizedList(new ArrayList<>());
-
     public UserDao(){
         loadFromFile();
     }
-
     public List<User> getAllUsers(){
         return users;
     }
-
     public synchronized void addUser(User user){
         users.add(user);
         saveToFile();
     }
-
     private static void loadFromFile () {
         try {
             File file = new File(FILE_NAME);
@@ -61,4 +57,13 @@ public class UserDao {
             System.out.println("Error saving data: " + e.getMessage());
         }
     }
+    public synchronized User getUserByName(String name) {
+        for (User user : users) {
+            if (user.getUserName().equalsIgnoreCase(name)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
 }

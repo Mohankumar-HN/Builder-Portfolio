@@ -41,7 +41,6 @@ public class ProjectDao {
                     System.out.println("Projects map empty" + existing.getAbsolutePath());
                     return;
                 }
-
             }
             File file = new File(FILE_NAME);
             File parent = file.getParentFile();

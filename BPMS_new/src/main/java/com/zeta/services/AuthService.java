@@ -1,5 +1,4 @@
 package com.zeta.services;
-
 import com.zeta.Dao.UserDao;
 import com.zeta.console.App;
 import com.zeta.entity.User;
@@ -58,6 +57,15 @@ public class AuthService {
             }
         }
         return false;
+    }
+
+    public static boolean isValidText(String input) {
+            if (input == null) return false;
+            input = input.trim();
+            if (input.isEmpty()) return false;
+            if (!input.matches(".*[a-zA-Z].*")) return false;
+            return true;
+
     }
 
 }

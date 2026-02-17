@@ -4,6 +4,7 @@ package com.zeta.console;
 import com.zeta.Dao.UserDao;
 import com.zeta.entity.PROJECT_STATUS;
 import com.zeta.entity.ROLE_TYPE;
+import com.zeta.entity.TASK_STATUS;
 import com.zeta.entity.User;
 import com.zeta.services.AuthService;
 import com.zeta.services.ProjectService;
@@ -140,34 +141,88 @@ public class App {
                 case 1:
                     System.out.println("Your Id : "+user.getId());
                     String id=scanner.nextLine();
-                    System.out.println("Enter project name");
-                    String name=scanner.nextLine();
-                    System.out.println("Enter description");
-                    String description=scanner.nextLine();
+                    String name;
+                    while (true) {
+                        System.out.println("Enter project name:");
+                        name = scanner.nextLine();
+
+                        if (!AuthService.isValidText(name)) {
+                            System.out.println("Invalid project name. Must contain at least one letter.");
+                            continue;
+                        }
+                        break;
+                    }
+                    String description;
+                    while (true) {
+                        System.out.println("Enter description:");
+                        description = scanner.nextLine();
+
+                        if (!AuthService.isValidText(description)) {
+                            System.out.println("Invalid description. Must contain at least one letter.");
+                            continue;
+                        }
+                        break;
+                    }
                     String startDate = readValidDate(scanner, "Enter start date");
                     String endDate = readValidDate(scanner, "Enter end date");
-                    System.out.println("Enter client id");
-                    String clientid=scanner.nextLine();
-                    System.out.println("Enter project status");
-                    PROJECT_STATUS status= PROJECT_STATUS.valueOf(scanner.next());
-                    service.createProject(id,name,description,startDate,endDate,clientid,user.getId(),status);
-                    break;
-                case 2:
-                    System.out.println("Enter project id");
-                    String updateid=scanner.next();
-                    System.out.println("Change status to--UPCOMING,INPROGRESS,COMPLETED");
-                    String statusInput = scanner.next();
-                    try {
-                        PROJECT_STATUS updatestatus =
-                                PROJECT_STATUS.valueOf(statusInput.toUpperCase());
 
-                        service.updateStatus(updateid, updatestatus);
-                        System.out.println("Updated project...");
+                    User client;
+                    String clientId;
+                    while (true) {
+                        System.out.println("Enter client username:");
+                        String clientName = scanner.nextLine();
 
-                    } catch (IllegalArgumentException e) {
-                        System.out.println("Invalid status entered!");
+                        if (!AuthService.isValidText(clientName)) {
+                            System.out.println("Invalid client name.");
+                            continue;
+                        }
+                        client = userDao.getUserByName(clientName);
+                        if (client == null || client.getRole() != ROLE_TYPE.CLIENT) {
+                            System.out.println("Client not found or not a CLIENT role. Try again.");
+                            continue;
+                        }
+                        clientId = client.getId();
+                        break;
+                    }
+                    PROJECT_STATUS status;
+                    while (true) {
+                        System.out.println("Enter project status (UPCOMING, INPROGRESS, COMPLETED):");
+                        String statusInput = scanner.nextLine();
+
+                        try {
+                            status = PROJECT_STATUS.valueOf(statusInput.toUpperCase());
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println(" Invalid status! Try again.");
+                        }
                     }
                     break;
+                case 2: {
+                    scanner.nextLine();
+                    System.out.println("Enter project id:");
+                    String updateId = scanner.nextLine();
+                    if (!service.getProjects().containsKey(updateId)) {
+                        System.out.println("Project not found!");
+                        break;
+                    }
+
+                    PROJECT_STATUS updateStatus;
+                    while (true) {
+                        System.out.println("Change status to (UPCOMING, INPROGRESS, COMPLETED):");
+                        String statusInput = scanner.nextLine();
+
+                        try {
+                            updateStatus = PROJECT_STATUS.valueOf(statusInput.toUpperCase());
+                            break;
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid status entered! Try again.");
+                        }
+                    }
+                    service.updateStatus(updateId, updateStatus);
+                    System.out.println("Project updated successfully.");
+                    break;
+                }
+
                 case 3:
                     System.out.println("Showing projects");
                     service.showProjects();
@@ -175,8 +230,25 @@ public class App {
                 case 4:
                     System.out.println("Enter project ID");
                     String pid=scanner.next();
+                    while (true) {
+                        System.out.println("Enter builder name:");
+                        String builderName = scanner.nextLine();
+                        if (!AuthService.isValidText(builderName)) {
+                            System.out.println("Invalid builder name.");
+                            continue;
+                        }
+                        boolean success = service.assignBuilder(pid, builderName);
+
+                        if (success) {
+                            break;
+                        }
+                    }
                     System.out.println("Enter builder name");
                     String buildername=scanner.next();
+                    if (buildername == null || buildername.trim().isEmpty()) {
+                        System.out.println(" Builder name cannot be empty!");
+                        return;
+                    }
                     service.assignBuilder(pid,buildername);
                     break;
                 case 5:
@@ -185,8 +257,8 @@ public class App {
                 case 6:
                     System.out.println("enter project id to delete");
                     scanner.nextLine();
-                    String deleteid=scanner.nextLine();
-                    service.deleteProject(deleteid);
+                    String deleteId=scanner.nextLine();
+                    service.deleteProject(deleteId);
                     break;
                 case 7:
                     System.out.println("Exiting...");
@@ -210,16 +282,41 @@ public class App {
             scanner.nextLine();
             switch (choice) {
                 case 1:
-                    System.out.println("Enter Project ID:");
-                    String projectId = scanner.nextLine();
-                    String taskId = service.generateTaskId();
-                    System.out.println("Enter Task ID: "+taskId);
+                    String projectId;
 
-                    System.out.println("Enter Task Name:");
-                    String taskName = scanner.nextLine();
+                    while (true) {
+                        System.out.println("Enter Project ID:");
+                        projectId = scanner.nextLine();
 
-                    System.out.println("Enter Task Description:");
-                    String taskDesc = scanner.nextLine();
+                        if (!service.getProjects().containsKey(projectId)) {
+                            System.out.println("Project not found. Try again.");
+                            continue;
+                        }
+                        break;
+                    }
+
+                    String taskName;
+                    while (true) {
+                        System.out.println("Enter Task Name:");
+                        taskName = scanner.nextLine();
+
+                        if (!AuthService.isValidText(taskName)) {
+                            System.out.println("Invalid task name.");
+                            continue;
+                        }
+                        break;
+                    }
+                    String taskDesc;
+                    while (true) {
+                        System.out.println("Enter Task Description:");
+                        taskDesc = scanner.nextLine();
+
+                        if (!AuthService.isValidText(taskDesc)) {
+                            System.out.println("Invalid task description.");
+                            continue;
+                        }
+                        break;
+                    }
 
                     System.out.println("Enter Builder Name:");
                     String builderName = scanner.nextLine();
@@ -268,11 +365,30 @@ public class App {
                     service.showBuilderTasks(builderName);
                     break;
                 case 3:
-                    System.out.println("Enter Project ID:");
-                    String projectId = scanner.nextLine();
-                    System.out.println("Enter Task ID:");
-                    String taskId = scanner.nextLine();
-                    service.updateTaskStatus(projectId, taskId, builderName);
+                    if (!service.hasTasksForBuilder(builderName)) {
+                        System.out.println("No tasks assigned to you.");
+                        break;
+                    }else{
+                        System.out.println("Enter Project ID:");
+                        String projectId = scanner.nextLine();
+                        System.out.println("Enter Task ID:");
+                        String taskId = scanner.nextLine();
+                        System.out.println("Enter new task status (Upcoming / InProgress / Completed):");
+                        System.out.println("Enter status:");
+                        String input = scanner.nextLine();
+
+                        TASK_STATUS status;
+
+                        try {
+                            status = TASK_STATUS.valueOf(input.toUpperCase());
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid status.");
+                            break;
+                        }
+
+                        service.updateTaskStatus(projectId, taskId, builderName, status);
+
+                    }
                     break;
                 case 4:
                     return;
@@ -322,12 +438,10 @@ public class App {
         while (true) {
             System.out.print("Enter username: ");
             username = scanner.nextLine();
-
-            if (username.trim().isEmpty()) {
-                System.out.println("Username cannot be empty.");
+            if (!AuthService.isValidText(username)) {
+                System.out.println("Username must contain at least one letter and cannot be empty.");
                 continue;
             }
-
             if (authService.usernameExists(username)) {
                 System.out.println("Username already taken. Try another.");
             }
@@ -336,7 +450,6 @@ public class App {
             }
 
         }
-
 
         String password;
 

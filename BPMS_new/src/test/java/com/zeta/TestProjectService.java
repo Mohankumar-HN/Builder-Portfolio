@@ -71,7 +71,7 @@ public class TestProjectService {
                 "BuilderA");
 
         String taskId = projectService.getProjects().get(projectId).getTasks().get(0).getTaskId();
-        projectService.updateTaskStatus(projectId, taskId, "BuilderA");
+        projectService.updateTaskStatus(projectId, taskId, "BuilderA",TASK_STATUS.InProgress);
         assertEquals(TASK_STATUS.Completed,
                 projectService.getProjects().get(projectId).getTasks().get(0).getStatus());
     }
@@ -82,7 +82,7 @@ public class TestProjectService {
 
         String taskId = projectService.getProjects().get(projectId).getTasks().get(0).getTaskId();
 
-        projectService.updateTaskStatus(projectId, taskId, "WrongBuilder");
+        projectService.updateTaskStatus(projectId, taskId, "WrongBuilder",TASK_STATUS.Completed);
 
         assertNotEquals(TASK_STATUS.Completed,
                 projectService.getProjects().get(projectId).getTasks().get(0).getStatus());
