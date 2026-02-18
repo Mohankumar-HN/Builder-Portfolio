@@ -111,6 +111,7 @@ public class ProjectService {
         }
 
         project.setBuilderName(builder.getUserName());
+        project.setBuilderId(builder.getId());
         projectDao.saveProjects(projects);
 
         System.out.println("Builder assigned successfully!");

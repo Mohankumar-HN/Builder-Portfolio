@@ -1,34 +1,15 @@
 {
-  "P1" : [ {
-    "taskId" : "T2",
-    "name" : "interior",
-    "description" : "jdfhjkhdls",
-    "assignedBuilder" : "mohan",
-    "status" : "Upcoming"
+  "P2" : [ {
+    "taskId" : "T4",
+    "name" : "Roof Work",
+    "description" : "Concrete",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
   }, {
-    "taskId" : "T2",
-    "name" : "interior",
-    "description" : "kfnsdklnk",
-    "assignedBuilder" : "mohan",
-    "status" : "Upcoming"
-  } ],
-  "P3" : [ {
-    "taskId" : "T3",
-    "name" : "flooring",
-    "description" : "flooring need to be done in 3 days",
-    "assignedBuilder" : "adam",
-    "status" : "Upcoming"
-  }, {
-    "taskId" : "T2",
-    "name" : "flooring",
-    "description" : "kjdfhljkas",
-    "assignedBuilder" : "adam",
-    "status" : "Upcoming"
-  }, {
-    "taskId" : "T2",
-    "name" : "flooring",
-    "description" : "kjghrdjk",
-    "assignedBuilder" : "adam",
-    "status" : "Upcoming"
+    "taskId" : "T5",
+    "name" : "Painting",
+    "description" : "Wall paint",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
   } ]
 }

@@ -1,7 +1,10 @@
 package com.zeta;
 
+import com.zeta.Dao.UserDao;
 import com.zeta.entity.PROJECT_STATUS;
+import com.zeta.entity.ROLE_TYPE;
 import com.zeta.entity.TASK_STATUS;
+import com.zeta.entity.User;
 import com.zeta.services.ProjectService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,11 +19,15 @@ public class TestProjectService {
     @BeforeEach
     void setUp() {
         projectService = new ProjectService();
-        projectService.createProject(null, "Skyrise", "6 storage buildings", "12-02-2026",
-                "12-09-2026", "C1", "null",PROJECT_STATUS.UPCOMING);
+        projectService.getProjects().clear();
+        projectService.createProject(null, "Skyrise", "6 storage buildings", "2022-09-09",
+                "2026-09-09", "C1", "null",PROJECT_STATUS.UPCOMING);
         projectId = projectService.getProjects().keySet().iterator().next();
+        UserDao.users.clear();
+        UserDao.users.add(new User("U2", "BuilderA", "Password@1", ROLE_TYPE.BUILDER));
+
     }
-//checking git conflicts
+
     @Test
     void testCreateProject() {
         assertEquals(1, projectService.getProjects().size());
@@ -71,9 +78,10 @@ public class TestProjectService {
                 "BuilderA");
 
         String taskId = projectService.getProjects().get(projectId).getTasks().get(0).getTaskId();
-        projectService.updateTaskStatus(projectId, taskId, "BuilderA",TASK_STATUS.InProgress);
-        assertEquals(TASK_STATUS.Completed,
+        projectService.updateTaskStatus(projectId, taskId, "BuilderA", TASK_STATUS.COMPLETED);
+        assertEquals(TASK_STATUS.COMPLETED,
                 projectService.getProjects().get(projectId).getTasks().get(0).getStatus());
+
     }
     @Test
     void testUpdateTaskStatusWrongBuilder() {
@@ -82,9 +90,9 @@ public class TestProjectService {
 
         String taskId = projectService.getProjects().get(projectId).getTasks().get(0).getTaskId();
 
-        projectService.updateTaskStatus(projectId, taskId, "WrongBuilder",TASK_STATUS.Completed);
+        projectService.updateTaskStatus(projectId, taskId, "WrongBuilder",TASK_STATUS.COMPLETED);
 
-        assertNotEquals(TASK_STATUS.Completed,
+        assertNotEquals(TASK_STATUS.COMPLETED,
                 projectService.getProjects().get(projectId).getTasks().get(0).getStatus());
     }
     @Test

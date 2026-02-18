@@ -196,6 +196,7 @@ public class App {
                             System.out.println(" Invalid status! Try again.");
                         }
                     }
+                    service.createProject(id, name, description, startDate, endDate, clientId, user.getId(), status);
                     break;
                 case 2: {
                     scanner.nextLine();
@@ -227,30 +228,33 @@ public class App {
                     System.out.println("Showing projects");
                     service.showProjects();
                     break;
-                case 4:
-                    System.out.println("Enter project ID");
-                    String pid=scanner.next();
+                case 4: {
+
+                    scanner.nextLine(); // clear buffer
+
+                    System.out.println("Enter project ID:");
+                    String pid = scanner.nextLine();
+
                     while (true) {
+
                         System.out.println("Enter builder name:");
                         String builderName = scanner.nextLine();
+
                         if (!AuthService.isValidText(builderName)) {
                             System.out.println("Invalid builder name.");
                             continue;
                         }
+
                         boolean success = service.assignBuilder(pid, builderName);
 
                         if (success) {
                             break;
                         }
                     }
-                    System.out.println("Enter builder name");
-                    String buildername=scanner.next();
-                    if (buildername == null || buildername.trim().isEmpty()) {
-                        System.out.println(" Builder name cannot be empty!");
-                        return;
-                    }
-                    service.assignBuilder(pid,buildername);
+
                     break;
+                }
+
                 case 5:
                     taskMenu(scanner);
                     break;

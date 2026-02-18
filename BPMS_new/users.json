@@ -48,4 +48,9 @@
   "userName" : "saf",
   "password" : "Pragnya!1234",
   "role" : "BUILDER"
+}, {
+  "id" : "U11",
+  "userName" : "client",
+  "password" : "Client@1234",
+  "role" : "CLIENT"
 } ]

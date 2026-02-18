@@ -29,7 +29,7 @@ public class Task {
         this.name = taskName;
         this.description = description;
         this.assignedBuilder = assignedBuilder;
-        status = TASK_STATUS.Upcoming;
+        status = TASK_STATUS.UPCOMING;
     }
 
     public String getAssignedBuilder() {
