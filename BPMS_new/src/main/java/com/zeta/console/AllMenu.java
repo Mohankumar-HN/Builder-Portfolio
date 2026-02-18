@@ -217,7 +217,7 @@ public class AllMenu {
             System.out.println("\n--- BUILDER MENU ---");
             System.out.println("1. View Assigned Projects");
             System.out.println("2. View My Tasks");
-            System.out.println("3. Mark Task Completed");
+            System.out.println("3. Update Task Status");
             System.out.println("4. Logout");
             int choice = scanner.nextInt();
             scanner.nextLine();

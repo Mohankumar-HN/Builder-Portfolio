@@ -63,4 +63,24 @@
   "userName" : "manu",
   "password" : "Manu@12345",
   "role" : "CLIENT"
+}, {
+  "id" : "U14",
+  "userName" : "Kushal",
+  "password" : "Kushal@12345",
+  "role" : "PROJECTMANAGER"
+}, {
+  "id" : "U15",
+  "userName" : "Kushi",
+  "password" : "Kushi@1234",
+  "role" : "CLIENT"
+}, {
+  "id" : "U16",
+  "userName" : "Bob",
+  "password" : "Bob@1234",
+  "role" : "BUILDER"
+}, {
+  "id" : "U17",
+  "userName" : "shiva",
+  "password" : "Shiva@1234",
+  "role" : "PROJECTMANAGER"
 } ]

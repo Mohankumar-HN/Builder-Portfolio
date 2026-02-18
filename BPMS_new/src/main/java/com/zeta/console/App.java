@@ -145,12 +145,12 @@ public class App {
             if (authService.isValidPassword(password)) {
                 break;
             } else {
-                System.out.println("Password must contain:");
-                System.out.println("- Minimum 8 characters");
-                System.out.println("- At least 1 uppercase letter");
-                System.out.println("- At least 1 lowercase letter");
-                System.out.println("- At least 1 digit");
-                System.out.println("- At least 1 special character (@#$%^&+=!)");
+                logger.info("Password must contain:");
+                logger.info("- Minimum 8 characters");
+                logger.info("- At least 1 uppercase letter");
+                logger.info("- At least 1 lowercase letter");
+                logger.info("- At least 1 digit");
+                logger.info("- At least 1 special character (@#$%^&+=!)");
             }
         }
         ROLE_TYPE role = null;

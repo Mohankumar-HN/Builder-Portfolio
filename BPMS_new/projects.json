@@ -26,5 +26,39 @@
     "builderName" : null,
     "tasks" : [ ],
     "projectManager" : null
+  },
+  "P161" : {
+    "projectId" : "P161",
+    "name" : "sattva",
+    "description" : "building a 10 storey building",
+    "startDate" : [ 2026, 12, 12 ],
+    "endDate" : [ 2028, 12, 12 ],
+    "clientId" : "U13",
+    "projectManagerId" : "U14",
+    "builderId" : null,
+    "status" : "UPCOMING",
+    "builderName" : null,
+    "tasks" : [ ],
+    "projectManager" : null
+  },
+  "P162" : {
+    "projectId" : "P162",
+    "name" : "zeta",
+    "description" : "building a working space for zeta",
+    "startDate" : [ 2026, 5, 19 ],
+    "endDate" : [ 2027, 9, 14 ],
+    "clientId" : "U13",
+    "projectManagerId" : "U14",
+    "builderId" : "U16",
+    "status" : "UPCOMING",
+    "builderName" : "Bob",
+    "tasks" : [ {
+      "taskId" : "T1",
+      "name" : "Interior works",
+      "description" : "Need to complete the interiors within 30 days",
+      "assignedBuilder" : "Bob",
+      "status" : "UPCOMING"
+    } ],
+    "projectManager" : null
   }
 }
