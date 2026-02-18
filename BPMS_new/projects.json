@@ -1,59 +1,15 @@
 {
-  "P2" : {
-    "projectId" : "P2",
-    "name" : "project3",
-    "description" : "as",
-    "startDate" : [ 2026, 1, 9 ],
+  "P34" : {
+    "projectId" : "P34",
+    "name" : "Skyrise",
+    "description" : "6 storage buildings",
+    "startDate" : [ 2022, 9, 9 ],
     "endDate" : [ 2026, 9, 9 ],
-    "clientId" : "U11",
-    "projectManagerId" : "U3",
-    "builderId" : null,
+    "clientId" : "C1",
+    "projectManagerId" : "null",
+    "builderId" : "U2",
     "status" : "UPCOMING",
-    "builderName" : "mohan",
-    "tasks" : [ {
-      "taskId" : "T4",
-      "name" : "Roof Work",
-      "description" : "Concrete",
-      "assignedBuilder" : "BuilderA",
-      "status" : "UPCOMING"
-    }, {
-      "taskId" : "T5",
-      "name" : "Painting",
-      "description" : "Wall paint",
-      "assignedBuilder" : "BuilderA",
-      "status" : "UPCOMING"
-    } ]
-  },
-  "P3" : {
-    "projectId" : "P3",
-    "name" : "sattvaa11",
-    "description" : "asd",
-    "startDate" : [ 2023, 9, 9 ],
-    "endDate" : [ 2027, 9, 9 ],
-    "clientId" : "U11",
-    "projectManagerId" : "U3",
-    "builderId" : "U1",
-    "status" : "INPROGRESS",
-    "builderName" : "mohan",
+    "builderName" : "BuilderA",
     "tasks" : [ ]
-  },
-  "P4" : {
-    "projectId" : "P4",
-    "name" : "BPMS",
-    "description" : "building for varun",
-    "startDate" : [ 2026, 2, 20 ],
-    "endDate" : [ 2028, 9, 12 ],
-    "clientId" : "U11",
-    "projectManagerId" : "U12",
-    "builderId" : "U1",
-    "status" : "UPCOMING",
-    "builderName" : "mohan",
-    "tasks" : [ {
-      "taskId" : "T1",
-      "name" : "flooring",
-      "description" : "need to complete the flooring by 3 days",
-      "assignedBuilder" : "mohan",
-      "status" : "UPCOMING"
-    } ]
   }
 }

@@ -69,6 +69,23 @@ public class TestAuthService {
         assertEquals(false,result);
     }
 
+    @Test
+    public  void testForisValidtext(){
+        boolean result=authService.isValidText("1234");
+        assertEquals(false,result);
+    }
+
+    @Test
+    public  void testForisValidtextpresent(){
+        boolean result=authService.isValidText("abcd");
+        assertEquals(true,result);
+    }
+
+    @Test
+    public void testgetbyusername(){
+        User result=authService.getUserByName("Pragnya");
+        assertEquals("Pragnya",result.getUserName());
+    }
 
 
 

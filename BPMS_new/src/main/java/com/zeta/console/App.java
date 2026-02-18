@@ -495,8 +495,6 @@ public class App {
         userDao.addUser(new User(id,username, password, role));
         System.out.println("Successfull Registration");
     }
-
-
 }
 
 
