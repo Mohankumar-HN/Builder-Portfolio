@@ -1,13 +1,13 @@
 package com.zeta;
 
 import com.zeta.Dao.UserDao;
-import com.zeta.console.App;
 import com.zeta.entity.ROLE_TYPE;
 import com.zeta.entity.User;
 import com.zeta.services.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.zeta.Dao.UserDao.users;
 import static junit.framework.Assert.*;
 
 public class TestAuthService {
@@ -15,18 +15,31 @@ public class TestAuthService {
     @BeforeEach
     void setUp() {
         authService = new AuthService();
-        UserDao.users.add(new User("1", "Pragnya", "1234", ROLE_TYPE.PROJECTMANAGER));
+        users.clear();
+        users.add(new User("1", "Pragnya", "1234", ROLE_TYPE.PROJECTMANAGER));
     }
+    @Test
+    public  void testGenerateId(){
+        String id= authService.generateUserId();
+        assertEquals(id,"U1");
+    }
+    @Test
+    public void testRegisterUser() {
+        boolean exists = authService.checkDuplicateUser("Pragnya");
+        assertTrue(exists);
+    }
+    @Test
+    public void testValidateNameNull() {
+        boolean result = AuthService.validateNameandDescription(null);
+        assertFalse(result);
+    }
+
     @Test
     public void testRegisterNewUser() {
-        boolean exists = authService.register("1");
-        assertTrue(exists);
+        boolean exists = authService.checkDuplicateUser("manu");
+        assertFalse(exists);
     }
-    @Test
-    public void testRegisterDuplicateUser() {
-        boolean exists = authService.register("1");
-        assertTrue(exists);
-    }
+
     @Test
     public void testLoginSuccess() {
         User user = authService.logIn("Pragnya", "1234");
@@ -39,13 +52,25 @@ public class TestAuthService {
         assertNull(user);
     }
     @Test
+    public void testInvalidPassword() {
+        boolean result = authService.isValidPassword( "pragn@12");
+        assertFalse(result);
+    }
+
+    @Test
+    public void testInvalidPasswordWithoutSmallLetters() {
+        boolean result = authService.isValidPassword( "PRAGNYA@12");
+        assertFalse(result);
+    }
+
+    @Test
     public void testLoginWrongUserName(){
         User user=authService.logIn("pragna","1234");
         assertNull(user);
     }
     @Test
     public void testLoginMultipleUsers() {
-        UserDao.users.add(new User("2", "mohan", "abcd", ROLE_TYPE.BUILDER));
+        users.add(new User("2", "mohan", "abcd", ROLE_TYPE.BUILDER));
         User otherUser = authService.logIn("mohan", "abcd");
         assertNotNull(otherUser);
         assertEquals(ROLE_TYPE.BUILDER, otherUser.getRole());
@@ -65,19 +90,25 @@ public class TestAuthService {
 
     @Test
     public void testUserNameExistence(){
-        boolean result=authService.usernameExists("pragnyak");
+        boolean result=authService.checkDuplicateUser("pragnyak");
         assertEquals(false,result);
     }
 
     @Test
     public  void testForisValidtext(){
-        boolean result=authService.isValidText("1234");
+        boolean result=authService.validateNameandDescription("1234");
+        assertEquals(false,result);
+    }
+
+    @Test
+    public  void testForNullUser(){
+        boolean result=authService.validateNameandDescription("");
         assertEquals(false,result);
     }
 
     @Test
     public  void testForisValidtextpresent(){
-        boolean result=authService.isValidText("abcd");
+        boolean result=authService.validateNameandDescription("abcd");
         assertEquals(true,result);
     }
 
@@ -85,6 +116,12 @@ public class TestAuthService {
     public void testgetbyusername(){
         User result=authService.getUserByName("Pragnya");
         assertEquals("Pragnya",result.getUserName());
+    }
+
+    @Test
+    public void testgetbyusernameNull(){
+        User result=authService.getUserByName("mohan");
+        assertNull(result);
     }
 
 

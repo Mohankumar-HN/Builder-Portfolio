@@ -8,19 +8,16 @@ import com.zeta.services.AuthService;
 import com.zeta.services.ProjectService;
 
 import java.util.Scanner;
-
 public class AllMenu {
-    private static ProjectService service = new ProjectService();
-
-     static void projectManagerMenu(Scanner scanner, User user) {
-
+    private static final ProjectService service = new ProjectService();
+    static void projectManagerMenu(Scanner scanner, User user) {
         while (true) {
             System.out.println("\n--- PROJECT MANAGER MENU ---");
             System.out.println("1. Create Project");
             System.out.println("2. Update Project");
-            System.out.println("3. see projects");
+            System.out.println("3. See projects");
             System.out.println("4. Assign Builders");
-            System.out.println("5. Create Task");
+            System.out.println("5. See Task Menu");
             System.out.println("6. Delete project");
             System.out.println("7. Exit");
 
@@ -34,7 +31,7 @@ public class AllMenu {
                         System.out.println("Enter project name:");
                         name = scanner.nextLine();
 
-                        if (!AuthService.isValidText(name)) {
+                        if (!AuthService.validateNameandDescription(name)) {
                             System.out.println("Invalid project name. Must contain at least one letter.");
                             continue;
                         }
@@ -45,7 +42,7 @@ public class AllMenu {
                         System.out.println("Enter description:");
                         description = scanner.nextLine();
 
-                        if (!AuthService.isValidText(description)) {
+                        if (!AuthService.validateNameandDescription(description)) {
                             System.out.println("Invalid description. Must contain at least one letter.");
                             continue;
                         }
@@ -53,14 +50,14 @@ public class AllMenu {
                     }
                     String startDate = App.readValidDate(scanner, "Enter start date");
                     String endDate = App.readValidDate(scanner, "Enter end date");
-
+                    String projectManagerId=user.getId();
                     User client;
                     String clientId;
                     while (true) {
                         System.out.println("Enter client username:");
                         String clientName = scanner.nextLine();
 
-                        if (!AuthService.isValidText(clientName)) {
+                        if (!AuthService.validateNameandDescription(clientName)) {
                             System.out.println("Invalid client name.");
                             continue;
                         }
@@ -84,7 +81,7 @@ public class AllMenu {
                             System.out.println(" Invalid status! Try again.");
                         }
                     }
-                    service.createProject(name, description, startDate, endDate, clientId, user.getId(), status);
+                    service.createProject(name, description, startDate, endDate, clientId, projectManagerId, status);
                     break;
                 case 2: {
                     scanner.nextLine();
@@ -94,7 +91,6 @@ public class AllMenu {
                         System.out.println("Project not found!");
                         break;
                     }
-
                     PROJECT_STATUS updateStatus;
                     while (true) {
                         System.out.println("Change status to (UPCOMING, INPROGRESS, COMPLETED):");
@@ -111,38 +107,28 @@ public class AllMenu {
                     System.out.println("Project updated successfully.");
                     break;
                 }
-
                 case 3:
                     System.out.println("Showing projects");
                     service.showProjects();
                     break;
                 case 4: {
-
-                    scanner.nextLine(); // clear buffer
-
+                    scanner.nextLine();
                     System.out.println("Enter project ID:");
                     String pid = scanner.nextLine();
-
                     while (true) {
-
                         System.out.println("Enter builder name:");
                         String builderName = scanner.nextLine();
-
-                        if (!AuthService.isValidText(builderName)) {
+                        if (!AuthService.validateNameandDescription(builderName)) {
                             System.out.println("Invalid builder name.");
                             continue;
                         }
-
                         boolean success = service.assignBuilder(pid, builderName);
-
                         if (success) {
                             break;
                         }
                     }
-
                     break;
                 }
-
                 case 5:
                     taskMenu(scanner);
                     break;
@@ -160,22 +146,17 @@ public class AllMenu {
             }
         }
     }
-
      static void taskMenu(Scanner scanner) {
-
         while (true) {
-
             System.out.println("\n--- TASK MENU ---");
             System.out.println("1. Create Task");
             System.out.println("2. View All Tasks");
             System.out.println("3. Back");
-
             int choice = scanner.nextInt();
             scanner.nextLine();
             switch (choice) {
                 case 1:
                     String projectId;
-
                     while (true) {
                         System.out.println("Enter Project ID:");
                         projectId = scanner.nextLine();
@@ -186,13 +167,11 @@ public class AllMenu {
                         }
                         break;
                     }
-
                     String taskName;
                     while (true) {
                         System.out.println("Enter Task Name:");
                         taskName = scanner.nextLine();
-
-                        if (!AuthService.isValidText(taskName)) {
+                        if (!AuthService.validateNameandDescription(taskName)) {
                             System.out.println("Invalid task name.");
                             continue;
                         }
@@ -202,53 +181,43 @@ public class AllMenu {
                     while (true) {
                         System.out.println("Enter Task Description:");
                         taskDesc = scanner.nextLine();
-
-                        if (!AuthService.isValidText(taskDesc)) {
+                        if (!AuthService.validateNameandDescription(taskDesc)) {
                             System.out.println("Invalid task description.");
                             continue;
                         }
                         break;
                     }
-
                     System.out.println("Enter Builder Name:");
                     String builderName = scanner.nextLine();
-
                     service.createTask(projectId,
                             taskName,
                             taskDesc,
                             builderName);
                     break;
-
                 case 2:
                     service.showAllTasks();
                     break;
-
                 case 3:
                     return;
-
                 default:
                     System.out.println("Invalid choice");
             }
         }
     }
-
     static void builderMenu(Scanner scanner,User user) {
         System.out.println("Hello Builder!!");
         String builderId = user.getId();
         String builderName = user.getUserName();
         System.out.println("Name : "+builderName);
         System.out.println("ID : " +builderId);
-
         while (true) {
             System.out.println("\n--- BUILDER MENU ---");
             System.out.println("1. View Assigned Projects");
             System.out.println("2. View My Tasks");
             System.out.println("3. Mark Task Completed");
             System.out.println("4. Logout");
-
             int choice = scanner.nextInt();
             scanner.nextLine();
-
             switch (choice) {
                 case 1:
                     service.showBuilderProjects(builderName);
@@ -268,18 +237,14 @@ public class AllMenu {
                         System.out.println("Enter new task status (Upcoming / InProgress / Completed):");
                         System.out.println("Enter status:");
                         String input = scanner.nextLine();
-
                         TASK_STATUS status;
-
                         try {
                             status = TASK_STATUS.valueOf(input.toUpperCase());
                         } catch (IllegalArgumentException e) {
                             System.out.println("Invalid status.");
                             break;
                         }
-
                         service.updateTaskStatus(projectId, taskId, builderName, status);
-
                     }
                     break;
                 case 4:
@@ -289,34 +254,25 @@ public class AllMenu {
             }
         }
     }
-
     static void clientMenu(Scanner scanner,User user) {
         String clientId = user.getId();
-
         System.out.println("Your Client ID: "+clientId);
-
         while (true) {
-
             System.out.println("\n--- CLIENT MENU ---");
             System.out.println("1. View My Projects");
             System.out.println("2. Logout");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
-
             switch (choice) {
-
                 case 1:
                     service.showClientProjects(clientId);
                     break;
-
                 case 2:
                     return;
-
                 default:
                     System.out.println("Invalid choice");
             }
         }
     }
-
 }

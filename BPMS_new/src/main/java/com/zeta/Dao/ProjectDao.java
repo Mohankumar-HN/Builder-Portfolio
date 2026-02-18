@@ -14,7 +14,6 @@ public class ProjectDao {
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     public Map<String,Project> projects = new HashMap<>();
-
     public Map<String, Project> loadProjects() {
         File file = new File(FILE_NAME);
         if (!file.exists()) {

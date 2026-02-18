@@ -58,4 +58,9 @@
   "userName" : "Varun",
   "password" : "Varun@12345",
   "role" : "PROJECTMANAGER"
+}, {
+  "id" : "U13",
+  "userName" : "manu",
+  "password" : "Manu@12345",
+  "role" : "CLIENT"
 } ]

@@ -1,25 +1,17 @@
 package com.zeta.console;
-
-
 import com.zeta.Dao.UserDao;
-import com.zeta.entity.PROJECT_STATUS;
 import com.zeta.entity.ROLE_TYPE;
-import com.zeta.entity.TASK_STATUS;
 import com.zeta.entity.User;
 import com.zeta.services.AuthService;
-import com.zeta.services.ProjectService;
-
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.*;
-
+import java.util.InputMismatchException;
+import java.util.Scanner;
 import static com.zeta.console.AllMenu.*;
-
 public class App {
     private static final UserDao userDao = new UserDao();
     public static void main(String[] args) {
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("----Welcome to Builder Portfolio system----");
 
@@ -45,7 +37,7 @@ public class App {
                     default:
                         System.out.println("Invalid choice");
                 }
-            }catch (java.util.InputMismatchException inputMismatchException){
+            } catch (java.util.InputMismatchException inputMismatchException) {
                 System.out.println("Invalid input");
                 scanner.nextLine();
             }
@@ -76,7 +68,7 @@ public class App {
                     System.out.println("Invalid role selection.");
                     return;
             }
-        }catch (InputMismatchException inputMismatchException){
+        } catch (InputMismatchException inputMismatchException) {
             System.out.println("Invalid input");
             scanner.nextLine();
             return;
@@ -96,13 +88,13 @@ public class App {
 
             switch (selectedRole) {
                 case PROJECTMANAGER:
-                    projectManagerMenu(scanner,loggedInUser);
+                    projectManagerMenu(scanner, loggedInUser);
                     break;
                 case BUILDER:
-                    builderMenu(scanner,loggedInUser);
+                    builderMenu(scanner, loggedInUser);
                     break;
                 case CLIENT:
-                    clientMenu(scanner,loggedInUser);
+                    clientMenu(scanner, loggedInUser);
                     break;
             }
 
@@ -126,32 +118,23 @@ public class App {
         }
     }
 
-
-
-    private static void addUser (Scanner scanner){
+    private static void addUser(Scanner scanner) {
         AuthService authService = new AuthService();
-
-
         String username;
-
         while (true) {
             System.out.print("Enter username: ");
             username = scanner.nextLine();
-            if (!AuthService.isValidText(username)) {
+            if (!AuthService.validateNameandDescription(username)) {
                 System.out.println("Username must contain at least one letter and cannot be empty.");
                 continue;
             }
-            if (authService.usernameExists(username)) {
+            if (authService.checkDuplicateUser(username)) {
                 System.out.println("Username already taken. Try another.");
-            }
-            else {
+            } else {
                 break;
             }
-
         }
-
         String password;
-
         while (true) {
             System.out.print("Enter Password: ");
             password = scanner.nextLine();
@@ -167,9 +150,7 @@ public class App {
                 System.out.println("- At least 1 special character (@#$%^&+=!)");
             }
         }
-
         ROLE_TYPE role = null;
-
         while (role == null) {
             System.out.println("Enter your role (PROJECTMANAGER, BUILDER, CLIENT): ");
             String roleInput = scanner.next();
@@ -183,18 +164,11 @@ public class App {
         String id = authService.generateUserId();
         System.out.println("Generated User ID: " + id);
 
-        if(authService.register(id)){
+        if (authService.checkDuplicateUser(id)) {
             System.out.println("User already registered");
             return;
         }
-        userDao.addUser(new User(id,username, password, role));
+        userDao.addUser(new User(id, username, password, role));
         System.out.println("Successfull Registration");
     }
-
-
-
 }
-
-
-
-

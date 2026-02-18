@@ -1,6 +1,6 @@
 package com.zeta.services;
+
 import com.zeta.Dao.UserDao;
-import com.zeta.console.App;
 import com.zeta.entity.User;
 
 import static com.zeta.Dao.UserDao.users;
@@ -9,25 +9,16 @@ import static com.zeta.Dao.UserDao.users;
 public class AuthService {
     public String generateUserId() {
         int max = 0;
-        for(User user : UserDao.users){
+        for (User user : UserDao.users) {
             String id = user.getId();
-            if(id != null && id.startsWith("U")){
+            if (id != null && id.startsWith("U")) {
                 int num = Integer.parseInt(id.substring(1));
-                if(num > max){
+                if (num > max) {
                     max = num;
                 }
             }
         }
         return "U" + (max + 1);
-    }
-
-    public boolean register(String id){
-        for(User user: users){
-            if(user.getId().equals(id)){
-                return true;
-            }
-        }
-        return false;
     }
 
     public User logIn(String name, String password) {
@@ -39,18 +30,19 @@ public class AuthService {
         }
         return null;
     }
+
     public boolean isValidPassword(String password) {
 
         if (password == null || password.length() < 8 ||
-                !password.matches(".*[A-Z].*")||
-                !password.matches(".*[a-z].*")||
+                !password.matches(".*[A-Z].*") ||
+                !password.matches(".*[a-z].*") ||
                 (!password.matches(".*[0-9].*")) ||
                 (!password.matches(".*[@#$%^&+=!].*")))
             return false;
         return true;
     }
-    public boolean usernameExists(String username) {
 
+    public boolean checkDuplicateUser(String username) {
         for (User user : users) {
             if (user.getUserName().equalsIgnoreCase(username)) {
                 return true;
@@ -59,15 +51,16 @@ public class AuthService {
         return false;
     }
 
-    public static boolean isValidText(String input) {
-            if (input == null) return false;
-            input = input.trim();
-            if (input.isEmpty()) return false;
-            if (!input.matches(".*[a-zA-Z].*")) return false;
-            return true;
+    public static boolean validateNameandDescription(String input) {
+        if (input == null) return false;
+        input = input.trim();
+        if (input.isEmpty()) return false;
+        if (!input.matches(".*[a-zA-Z].*")) return false;
+        return true;
 
     }
-    public synchronized static User getUserByName(String name) {
+
+    public static User getUserByName(String name) {
         for (User user : users) {
             if (user.getUserName().equalsIgnoreCase(name)) {
                 return user;

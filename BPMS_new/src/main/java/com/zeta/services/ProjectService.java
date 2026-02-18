@@ -54,7 +54,7 @@ public class ProjectService {
                                            String start, String end, String clientId,String projectManagerId,PROJECT_STATUS status) {
         String id = generateProjectId();
         try {
-            LocalDate startDate = LocalDate.parse(start);  // format: yyyy-MM-dd
+            LocalDate startDate = LocalDate.parse(start);
             LocalDate endDate = LocalDate.parse(end);
             if (endDate.isBefore(LocalDate.now())) {
                 System.out.println("End date cannot be in the past!");
@@ -100,7 +100,6 @@ public class ProjectService {
             projects.remove(id);
             System.out.println("Project deleted successfully");
             projectDao.saveProjects(projects);
-            // also remove tasks for this project
             if (tasksByProject != null && tasksByProject.containsKey(id)) {
                 tasksByProject.remove(id);
                 taskDao.saveTasks(tasksByProject);
@@ -169,14 +168,14 @@ public class ProjectService {
 
             if (builderName.equals(project.getBuilderName())) {
 
-                System.out.println("\n========== ASSIGNED PROJECT ==========");
+                System.out.println("\n------------ASSIGNED PROJECT ------------");
                 System.out.println("Project ID     : " + project.getProjectId());
                 System.out.println("Project Name   : " + project.getName());
                 System.out.println("Description    : " + project.getDescription());
                 System.out.println("Start Date     : " + project.getStartDate());
                 System.out.println("End Date       : " + project.getEndDate());
                 System.out.println("Status         : " + project.getStatus());
-                System.out.println("======================================\n");
+                System.out.println("-------------------------------------------\n");
 
                 found = true;
             }
@@ -238,7 +237,7 @@ public class ProjectService {
         boolean found = false;
         for (Project project : projects.values()) {
             if (clientId.equals(project.getClientId())) {
-                System.out.println("=================================");
+                System.out.println("-------------------------------------");
                 System.out.println("Project ID: " + project.getProjectId());
                 System.out.println("Project Name: " + project.getName());
                 System.out.println("Description: " + project.getDescription());
@@ -247,7 +246,7 @@ public class ProjectService {
                 System.out.println("Project Manager ID: " + project.getProjectManagerId());
                 System.out.println("Assigned Builder: " + project.getBuilderName());
                 System.out.println("Project Status: " + project.getStatus());
-                System.out.println("=================================");
+                System.out.println("------------------------------------");
                 found = true;
             }
         }
