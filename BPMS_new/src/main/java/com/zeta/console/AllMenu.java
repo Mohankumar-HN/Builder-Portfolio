@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class AllMenu {
     private static final ProjectService service = new ProjectService();
-    static final Logger logger= Logger.getLogger(AllMenu.class.getName());
+    static final Logger logger = Logger.getLogger(AllMenu.class.getName());
     static void projectManagerMenu(Scanner scanner, User user) {
         while (true) {
             System.out.println("\n--- PROJECT MANAGER MENU ---");
@@ -23,33 +23,22 @@ public class AllMenu {
             System.out.println("5. See Task Menu");
             System.out.println("6. Delete project");
             System.out.println("7. Exit");
-
-
             int choice;
-
             try {
-
                 choice = scanner.nextInt();
-
             } catch (Exception e) {
-
                 logger.info("Invalid input. Please enter number only.");
-
                 scanner.nextLine();
-
                 continue;
-
             }
-
             switch (choice) {
                 case 1:
-                    System.out.println("Your Id : "+user.getId());
-                    String id=scanner.nextLine();
+                    System.out.println("Your Id : " + user.getId());
+                    String id = scanner.nextLine();
                     String name;
                     while (true) {
                         System.out.println("Enter project name:");
                         name = scanner.nextLine();
-
                         if (!AuthService.validateNameandDescription(name)) {
                             logger.info("Invalid project name. Must contain at least one letter.");
                             continue;
@@ -69,7 +58,7 @@ public class AllMenu {
                     }
                     String startDate = App.readValidDate(scanner, "Enter start date");
                     String endDate = App.readValidDate(scanner, "Enter end date");
-                    String projectManagerId=user.getId();
+                    String projectManagerId = user.getId();
                     User client;
                     String clientId;
                     while (true) {
@@ -154,7 +143,7 @@ public class AllMenu {
                 case 6:
                     System.out.println("enter project id to delete");
                     scanner.nextLine();
-                    String deleteId=scanner.nextLine();
+                    String deleteId = scanner.nextLine();
                     service.deleteProject(deleteId);
                     break;
                 case 7:
@@ -165,28 +154,20 @@ public class AllMenu {
             }
         }
     }
-     static void taskMenu(Scanner scanner) {
+    static void taskMenu(Scanner scanner) {
         while (true) {
             System.out.println("\n--- TASK MENU ---");
             System.out.println("1. Create Task");
             System.out.println("2. View All Tasks");
             System.out.println("3. Back");
             int choice;
-
             try {
-
                 choice = scanner.nextInt();
-
             } catch (Exception e) {
-
                 logger.info("Invalid input. Please enter number only.");
-
                 scanner.nextLine();
-
                 continue;
-
             }
-
             switch (choice) {
                 case 1:
                     String projectId;
@@ -237,12 +218,13 @@ public class AllMenu {
             }
         }
     }
-    static void builderMenu(Scanner scanner,User user) {
+
+    static void builderMenu(Scanner scanner, User user) {
         System.out.println("Hello Builder!!");
         String builderId = user.getId();
         String builderName = user.getUserName();
-        System.out.println("Name : "+builderName);
-        System.out.println("ID : " +builderId);
+        System.out.println("Name : " + builderName);
+        System.out.println("ID : " + builderId);
         while (true) {
             System.out.println("\n--- BUILDER MENU ---");
             System.out.println("1. View Assigned Projects");
@@ -250,21 +232,13 @@ public class AllMenu {
             System.out.println("3. Update Task Status");
             System.out.println("4. Logout");
             int choice;
-
             try {
-
                 choice = scanner.nextInt();
-
             } catch (Exception e) {
-
                 logger.info("Invalid input. Please enter number only.");
-
                 scanner.nextLine();
-
                 continue;
-
             }
-
             switch (choice) {
                 case 1:
                     service.showBuilderProjects(builderName);
@@ -276,7 +250,7 @@ public class AllMenu {
                     if (!service.hasTasksForBuilder(builderName)) {
                         logger.info("No tasks assigned to you.");
                         break;
-                    }else{
+                    } else {
                         System.out.println("Enter Project ID:");
                         String projectId = scanner.nextLine();
                         System.out.println("Enter Task ID:");
@@ -301,30 +275,21 @@ public class AllMenu {
             }
         }
     }
-    static void clientMenu(Scanner scanner,User user) {
+    static void clientMenu(Scanner scanner, User user) {
         String clientId = user.getId();
-        System.out.println("Your Client ID: "+clientId);
+        System.out.println("Your Client ID: " + clientId);
         while (true) {
             System.out.println("\n--- CLIENT MENU ---");
             System.out.println("1. View My Projects");
             System.out.println("2. Logout");
-
             int choice;
-
             try {
-
                 choice = scanner.nextInt();
-
             } catch (Exception e) {
-
                 logger.info("Invalid input. Please enter number only.");
-
                 scanner.nextLine();
-
                 continue;
-
             }
-
             switch (choice) {
                 case 1:
                     service.showClientProjects(clientId);

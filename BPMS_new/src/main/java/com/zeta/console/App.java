@@ -1,4 +1,5 @@
 package com.zeta.console;
+
 import com.zeta.Dao.UserDao;
 import com.zeta.entity.ROLE_TYPE;
 import com.zeta.entity.User;
@@ -11,22 +12,20 @@ import java.util.Scanner;
 import java.util.logging.Logger;
 
 import static com.zeta.console.AllMenu.*;
+
 public class App {
-    static final Logger logger= Logger.getLogger(App.class.getName());
+    static final Logger logger = Logger.getLogger(App.class.getName());
     private static final UserDao userDao = new UserDao();
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("----Welcome to Builder Portfolio system----");
-
         while (true) {
             System.out.println("1: Register");
             System.out.println("2: Login");
             System.out.println("3: Exit");
-
             try {
                 int n = scanner.nextInt();
                 scanner.nextLine();
-
                 switch (n) {
                     case 1:
                         addUser(scanner);
@@ -46,14 +45,12 @@ public class App {
             }
         }
     }
-
     private static void login(Scanner scanner) {
 
         System.out.println("Select your role:");
         System.out.println("1. Project Manager");
         System.out.println("2. Builder");
         System.out.println("3. Client");
-
         ROLE_TYPE selectedRole = null;
         try {
             int roleChoice = scanner.nextInt();
@@ -76,19 +73,14 @@ public class App {
             scanner.nextLine();
             return;
         }
-
         System.out.println("Enter your name:");
         String name = scanner.next();
-
         System.out.println("Enter your password:");
         String password = scanner.next();
-
         AuthService authService = new AuthService();
         User loggedInUser = authService.logIn(name, password);
-
         if (loggedInUser != null && loggedInUser.getRole() == selectedRole) {
             logger.info("Login successful");
-
             switch (selectedRole) {
                 case PROJECTMANAGER:
                     projectManagerMenu(scanner, loggedInUser);
@@ -100,18 +92,14 @@ public class App {
                     clientMenu(scanner, loggedInUser);
                     break;
             }
-
         } else {
             logger.warning("Login failed (wrong role or credentials)");
         }
     }
-
     static String readValidDate(Scanner scanner, String message) {
-
         while (true) {
             System.out.println(message + " (yyyy-MM-dd): ");
             String input = scanner.nextLine().trim();
-
             try {
                 LocalDate.parse(input);
                 return input;

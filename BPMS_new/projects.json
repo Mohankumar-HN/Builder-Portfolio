@@ -1,6 +1,6 @@
 {
-  "P177" : {
-    "projectId" : "P177",
+  "P304" : {
+    "projectId" : "P304",
     "name" : "Skyrise",
     "description" : "6 storage buildings",
     "startDate" : [ 2022, 9, 9 ],
@@ -10,20 +10,6 @@
     "builderId" : "U2",
     "status" : "UPCOMING",
     "builderName" : "BuilderA",
-    "tasks" : [ ],
-    "projectManager" : null
-  },
-  "P178" : {
-    "projectId" : "P178",
-    "name" : "buddha villa",
-    "description" : "building a home in 30x40 site",
-    "startDate" : [ 2026, 12, 12 ],
-    "endDate" : [ 2028, 12, 12 ],
-    "clientId" : "U15",
-    "projectManagerId" : "U14",
-    "builderId" : "U16",
-    "status" : "UPCOMING",
-    "builderName" : "Bob",
     "tasks" : [ ],
     "projectManager" : null
   }

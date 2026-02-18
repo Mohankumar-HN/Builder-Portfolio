@@ -410,5 +410,285 @@
     "description" : "Wall paint",
     "assignedBuilder" : "BuilderA",
     "status" : "UPCOMING"
+  } ],
+  "P181" : [ {
+    "taskId" : "T1",
+    "name" : "Electrical",
+    "description" : "Wiring",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P186" : [ {
+    "taskId" : "T2",
+    "name" : "Foundation Work",
+    "description" : "Start digging",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P187" : [ {
+    "taskId" : "T3",
+    "name" : "Plumbing",
+    "description" : "Install pipes",
+    "assignedBuilder" : "BuilderA",
+    "status" : "COMPLETED"
+  } ],
+  "P191" : [ {
+    "taskId" : "T4",
+    "name" : "Roof Work",
+    "description" : "Concrete",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P192" : [ {
+    "taskId" : "T5",
+    "name" : "Painting",
+    "description" : "Wall paint",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P196" : [ {
+    "taskId" : "T1",
+    "name" : "Electrical",
+    "description" : "Wiring",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P201" : [ {
+    "taskId" : "T2",
+    "name" : "Foundation Work",
+    "description" : "Start digging",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P202" : [ {
+    "taskId" : "T3",
+    "name" : "Plumbing",
+    "description" : "Install pipes",
+    "assignedBuilder" : "BuilderA",
+    "status" : "COMPLETED"
+  } ],
+  "P206" : [ {
+    "taskId" : "T4",
+    "name" : "Roof Work",
+    "description" : "Concrete",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P207" : [ {
+    "taskId" : "T5",
+    "name" : "Painting",
+    "description" : "Wall paint",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P211" : [ {
+    "taskId" : "T1",
+    "name" : "Electrical",
+    "description" : "Wiring",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P217" : [ {
+    "taskId" : "T2",
+    "name" : "Foundation Work",
+    "description" : "Start digging",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P218" : [ {
+    "taskId" : "T3",
+    "name" : "Plumbing",
+    "description" : "Install pipes",
+    "assignedBuilder" : "BuilderA",
+    "status" : "COMPLETED"
+  } ],
+  "P222" : [ {
+    "taskId" : "T4",
+    "name" : "Roof Work",
+    "description" : "Concrete",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P223" : [ {
+    "taskId" : "T5",
+    "name" : "Painting",
+    "description" : "Wall paint",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P227" : [ {
+    "taskId" : "T1",
+    "name" : "Electrical",
+    "description" : "Wiring",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P233" : [ {
+    "taskId" : "T2",
+    "name" : "Foundation Work",
+    "description" : "Start digging",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P234" : [ {
+    "taskId" : "T3",
+    "name" : "Plumbing",
+    "description" : "Install pipes",
+    "assignedBuilder" : "BuilderA",
+    "status" : "COMPLETED"
+  } ],
+  "P238" : [ {
+    "taskId" : "T4",
+    "name" : "Roof Work",
+    "description" : "Concrete",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P239" : [ {
+    "taskId" : "T5",
+    "name" : "Painting",
+    "description" : "Wall paint",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P243" : [ {
+    "taskId" : "T1",
+    "name" : "Electrical",
+    "description" : "Wiring",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P249" : [ {
+    "taskId" : "T2",
+    "name" : "Foundation Work",
+    "description" : "Start digging",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P250" : [ {
+    "taskId" : "T3",
+    "name" : "Plumbing",
+    "description" : "Install pipes",
+    "assignedBuilder" : "BuilderA",
+    "status" : "COMPLETED"
+  } ],
+  "P254" : [ {
+    "taskId" : "T4",
+    "name" : "Roof Work",
+    "description" : "Concrete",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P255" : [ {
+    "taskId" : "T5",
+    "name" : "Painting",
+    "description" : "Wall paint",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P259" : [ {
+    "taskId" : "T1",
+    "name" : "Electrical",
+    "description" : "Wiring",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P265" : [ {
+    "taskId" : "T2",
+    "name" : "Foundation Work",
+    "description" : "Start digging",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P266" : [ {
+    "taskId" : "T3",
+    "name" : "Plumbing",
+    "description" : "Install pipes",
+    "assignedBuilder" : "BuilderA",
+    "status" : "COMPLETED"
+  } ],
+  "P270" : [ {
+    "taskId" : "T4",
+    "name" : "Roof Work",
+    "description" : "Concrete",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P271" : [ {
+    "taskId" : "T5",
+    "name" : "Painting",
+    "description" : "Wall paint",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P275" : [ {
+    "taskId" : "T1",
+    "name" : "Electrical",
+    "description" : "Wiring",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P281" : [ {
+    "taskId" : "T2",
+    "name" : "Foundation Work",
+    "description" : "Start digging",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P282" : [ {
+    "taskId" : "T3",
+    "name" : "Plumbing",
+    "description" : "Install pipes",
+    "assignedBuilder" : "BuilderA",
+    "status" : "COMPLETED"
+  } ],
+  "P286" : [ {
+    "taskId" : "T4",
+    "name" : "Roof Work",
+    "description" : "Concrete",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P287" : [ {
+    "taskId" : "T5",
+    "name" : "Painting",
+    "description" : "Wall paint",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P291" : [ {
+    "taskId" : "T1",
+    "name" : "Electrical",
+    "description" : "Wiring",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P297" : [ {
+    "taskId" : "T2",
+    "name" : "Foundation Work",
+    "description" : "Start digging",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P298" : [ {
+    "taskId" : "T3",
+    "name" : "Plumbing",
+    "description" : "Install pipes",
+    "assignedBuilder" : "BuilderA",
+    "status" : "COMPLETED"
+  } ],
+  "P302" : [ {
+    "taskId" : "T4",
+    "name" : "Roof Work",
+    "description" : "Concrete",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P303" : [ {
+    "taskId" : "T5",
+    "name" : "Painting",
+    "description" : "Wall paint",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
   } ]
 }

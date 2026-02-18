@@ -2,20 +2,21 @@ package com.zeta.Dao;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zeta.console.App;
-import com.zeta.entity.Project;
-import com.zeta.entity.User;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.zeta.entity.Project;
+
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class ProjectDao {
-    private static final String FILE_NAME = System.getProperty("user.dir")+"/projects.json";
+    private static final String FILE_NAME = System.getProperty("user.dir") + "/projects.json";
     private final ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
-    static final Logger logger= Logger.getLogger(ProjectDao.class.getName());
-    public Map<String,Project> projects = new HashMap<>();
+    static final Logger logger = Logger.getLogger(ProjectDao.class.getName());
+    public Map<String, Project> projects = new HashMap<>();
+
     public Map<String, Project> loadProjects() {
         File file = new File(FILE_NAME);
         if (!file.exists()) {
@@ -28,12 +29,14 @@ public class ProjectDao {
         }
         try {
             return objectMapper.readValue(file,
-                    new TypeReference<Map<String, Project>>() {});
+                    new TypeReference<Map<String, Project>>() {
+                    });
         } catch (IOException ioException) {
-            logger.info("Error loading projects : "+ioException.getMessage());
+            logger.info("Error loading projects : " + ioException.getMessage());
             return new HashMap<>();
         }
     }
+
     public void saveProjects(Map<String, Project> projects) {
         try {
             if (projects == null || projects.isEmpty()) {

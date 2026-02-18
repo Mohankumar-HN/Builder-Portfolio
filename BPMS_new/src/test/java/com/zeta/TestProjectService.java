@@ -9,6 +9,9 @@ import com.zeta.services.ProjectService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TestProjectService {
@@ -50,6 +53,14 @@ public class TestProjectService {
         projectService.assignBuilder(projectId, "BuilderA");
         assertEquals("BuilderA",
                 projectService.getProjects().get(projectId).getBuilderName());
+    }
+    @Test
+    void testShowProjects_whenNoProjectFound() {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStream));
+        projectService.showProjects("INVALID_PM");
+        String output = outputStream.toString();
+        assertEquals("", output.trim());
     }
 
     @Test

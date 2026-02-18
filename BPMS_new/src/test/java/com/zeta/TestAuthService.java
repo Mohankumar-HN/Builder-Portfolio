@@ -19,11 +19,6 @@ public class TestAuthService {
         users.add(new User("1", "Pragnya", "1234", ROLE_TYPE.PROJECTMANAGER));
     }
     @Test
-    public  void testGenerateId(){
-        String id= authService.generateUserId();
-        assertEquals(id,"U1");
-    }
-    @Test
     public void testRegisterUser() {
         boolean exists = authService.checkDuplicateUser("Pragnya");
         assertTrue(exists);

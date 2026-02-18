@@ -2,7 +2,6 @@ package com.zeta.Dao;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zeta.console.App;
 import com.zeta.entity.User;
 
 import java.io.File;
@@ -16,7 +15,8 @@ public class UserDao {
     private static final String FILE_NAME = System.getProperty("user.dir") + "/users.json";
     private static final ObjectMapper mapper = new ObjectMapper();
     public static List<User> users = Collections.synchronizedList(new ArrayList<>());
-    static final Logger logger= Logger.getLogger(UserDao.class.getName());
+    static final Logger logger = Logger.getLogger(UserDao.class.getName());
+
     public UserDao() {
         loadFromFile();
     }
@@ -38,7 +38,8 @@ public class UserDao {
                 logger.info("file is empty");
                 return;
             }
-            List<User> loadedUsers = mapper.readValue(file, new TypeReference<List<User>>() {});
+            List<User> loadedUsers = mapper.readValue(file, new TypeReference<List<User>>() {
+            });
             users.clear();
             users.addAll(loadedUsers);
 
@@ -47,17 +48,13 @@ public class UserDao {
         }
 
     }
-
     private static void saveToFile() {
         try {
             File file = new File(FILE_NAME);
-
             mapper.writerWithDefaultPrettyPrinter()
                     .writeValue(new File(FILE_NAME), users);
         } catch (IOException e) {
             logger.info("Error saving data: " + e.getMessage());
         }
     }
-
-
 }

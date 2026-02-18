@@ -1,32 +1,34 @@
 
 package com.zeta.services;
-import com.zeta.Dao.UserDao;
-import com.zeta.console.App;
-import com.zeta.entity.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import com.zeta.Dao.ProjectDao;
 import com.zeta.Dao.TaskDao;
+import com.zeta.Dao.UserDao;
+import com.zeta.entity.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
-import java.util.Scanner;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
-
 public class ProjectService {
+    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final UserDao userDao = new UserDao();
     private final ProjectDao projectDao = new ProjectDao();
     private final TaskDao taskDao = new TaskDao();
     private Map<String, Project> projects;
     private Map<String, List<Task>> tasksByProject;
-    static final Logger logger= Logger.getLogger(ProjectService.class.getName());
+    static final Logger logger = Logger.getLogger(ProjectService.class.getName());
     private static int projectCounter = 1;
     private String generateProjectId() {
         return "P" + (projectCounter++);
     }
+
     public ProjectService() {
+
         projects = projectDao.loadProjects();
         tasksByProject = taskDao.loadTasks();
         for (Map.Entry<String, List<Task>> entry : tasksByProject.entrySet()) {
@@ -39,7 +41,6 @@ public class ProjectService {
             }
         }
         int max = 0;
-
         for (String id : projects.keySet()) {
             if (id != null && id.startsWith("P")) {
                 try {
@@ -47,13 +48,15 @@ public class ProjectService {
                     if (num > max) {
                         max = num;
                     }
-                } catch (NumberFormatException ignored) {}
+                } catch (NumberFormatException ignored) {
+                }
             }
         }
         projectCounter = max + 1;
     }
-    public synchronized void createProject( String name, String description,
-                                           String start, String end, String clientId,String projectManagerId,PROJECT_STATUS status) {
+
+    public synchronized void createProject(String name, String description,
+                                           String start, String end, String clientId, String projectManagerId, PROJECT_STATUS status) {
         String id = generateProjectId();
         try {
             LocalDate startDate = LocalDate.parse(start);
@@ -66,7 +69,7 @@ public class ProjectService {
                 logger.info("End date cannot be before start date!");
                 return;
             }
-            Project project = new Project(id, name, description, startDate, endDate, clientId,projectManagerId, status);
+            Project project = new Project(id, name, description, startDate, endDate, clientId, projectManagerId, status);
             projects.put(id, project);
             projectDao.saveProjects(projects);
             System.out.println("Project Created Successfully!");
@@ -86,7 +89,6 @@ public class ProjectService {
             logger.info("Project Not Found!");
         }
     }
-
     public synchronized void showProjects(String managerId) {
         boolean found = false;
         for (Project project : projects.values()) {
@@ -99,10 +101,8 @@ public class ProjectService {
             logger.info("No projects found for manager: " + managerId);
         }
     }
-
-
-    public synchronized void deleteProject(String id){
-        if(projects.containsKey(id)){
+    public synchronized void deleteProject(String id) {
+        if (projects.containsKey(id)) {
             projects.remove(id);
             System.out.println("Project deleted successfully");
             projectDao.saveProjects(projects);
@@ -110,48 +110,43 @@ public class ProjectService {
                 tasksByProject.remove(id);
                 taskDao.saveTasks(tasksByProject);
             }
-        }else{
+        } else {
             logger.info("project not found");
         }
     }
-    public  synchronized boolean assignBuilder(String id,String name){
-        Project project=projects.get(id);
-        if(project==null) {
+    public synchronized boolean assignBuilder(String id, String name) {
+        Project project = projects.get(id);
+        if (project == null) {
             logger.info("project not found");
             return false;
         }
         User builder = AuthService.getUserByName(name);
-
         if (builder == null || builder.getRole() != ROLE_TYPE.BUILDER) {
             logger.info("Invalid builder! User not found or not a BUILDER.");
             return false;
         }
-
         project.setBuilderName(builder.getUserName());
         project.setBuilderId(builder.getId());
         projectDao.saveProjects(projects);
-
         System.out.println("Builder assigned successfully!");
         return true;
     }
     private static int taskCounter = 1;
-
     public synchronized String generateTaskId() {
         return "T" + (taskCounter++);
     }
-
     public synchronized void createTask(String projectId, String taskName,
                                         String description, String builderName) {
         Project project = projects.get(projectId);
         if (project != null) {
-            String taskId=generateTaskId();
-            System.out.println("Tas Id : "+taskId);
+            String taskId = generateTaskId();
+            System.out.println("Tas Id : " + taskId);
             Task task = new Task(taskId, taskName,
                     description, builderName);
             project.getTasks().add(task);
             System.out.println("Task created successfully!");
             projectDao.saveProjects(projects);
-            
+
             tasksByProject.computeIfAbsent(projectId, k -> new java.util.ArrayList<>()).add(task);
             taskDao.saveTasks(tasksByProject);
         } else {
@@ -167,13 +162,9 @@ public class ProjectService {
         }
     }
     public synchronized void showBuilderProjects(String builderName) {
-
         boolean found = false;
-
         for (Project project : projects.values()) {
-
             if (builderName.equals(project.getBuilderName())) {
-
                 System.out.println("\n------------ASSIGNED PROJECT ------------");
                 System.out.println("Project ID     : " + project.getProjectId());
                 System.out.println("Project Name   : " + project.getName());
@@ -182,16 +173,13 @@ public class ProjectService {
                 System.out.println("End Date       : " + project.getEndDate());
                 System.out.println("Status         : " + project.getStatus());
                 System.out.println("-------------------------------------------\n");
-
                 found = true;
             }
         }
-
         if (!found) {
             logger.info("No projects assigned.");
         }
     }
-
     public synchronized void showBuilderTasks(String builderName) {
         boolean found = false;
         for (Project project : projects.values()) {
@@ -212,33 +200,23 @@ public class ProjectService {
             String taskId,
             String builderName,
             TASK_STATUS newStatus) {
-
         Project project = projects.get(projectId);
-
         if (project == null) {
             logger.info("Project not found.");
             return;
         }
-
         for (Task task : project.getTasks()) {
-
             if (task.getTaskId().equals(taskId) &&
                     task.getAssignedBuilder().equals(builderName)) {
-
                 task.setStatus(newStatus);
-
                 projectDao.saveProjects(projects);
                 taskDao.saveTasks(tasksByProject);
-
                 System.out.println("Task status updated successfully!");
                 return;
             }
         }
-
         logger.info("Task not found or not assigned to you.");
     }
-
-
     public synchronized void showClientProjects(String clientId) {
         boolean found = false;
         for (Project project : projects.values()) {
@@ -261,7 +239,8 @@ public class ProjectService {
             logger.info("No projects found for this client.");
         }
     }
-    public Map<String,Project> getProjects(){
+
+    public Map<String, Project> getProjects() {
         return projects;
     }
     public boolean hasTasksForBuilder(String builderName) {

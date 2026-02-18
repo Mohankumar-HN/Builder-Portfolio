@@ -1,9 +1,8 @@
 package com.zeta.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.time.LocalDate;
-
 
 
 public class Project {
@@ -19,11 +18,9 @@ public class Project {
     private PROJECT_STATUS status;
     private String builderName;
     private List<Task> tasks = new ArrayList<>();
-
-
     public Project(String projectId, String name, String description,
                    LocalDate startDate, LocalDate endDate,
-                   String clientId,String projectManagerId,PROJECT_STATUS status) {
+                   String clientId, String projectManagerId, PROJECT_STATUS status) {
 
         this.projectId = projectId;
         this.name = name;
@@ -34,72 +31,57 @@ public class Project {
         this.projectManagerId = projectManagerId;
         this.status = status;
     }
-    public Project(){};
+    public Project() {}
     public String getProjectId() {
         return projectId;
     }
-    public String getClientId() { return clientId; }
+    public String getClientId() {return clientId;}
     private String projectManager;
-
-    // getters
     public String getProjectManager() {
         return projectManager;
     }
     public String getName() {
         return name;
     }
-
     public String getDescription() {
         return description;
     }
-
     public LocalDate getStartDate() {
         return startDate;
     }
-
     public LocalDate getEndDate() {
         return endDate;
     }
-
     public String getProjectManagerId() {
         return projectManagerId;
     }
-
     public String getBuilderId() {
         return builderId;
     }
-
     public PROJECT_STATUS getStatus() {
         return status;
     }
-
     public void setStatus(PROJECT_STATUS status) {
         this.status = status;
     }
-
     public void setBuilderName(String builderName) {
         this.builderName = builderName;
     }
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
-
-
     public List<Task> getTasks() {
         return tasks;
     }
     public String getBuilderName() {
         return builderName;
     }
-
-
     @Override
     public String toString() {
-        return "----------------------"+
+        return "----------------------" +
                 "\nProject ID: " + projectId +
                 "\nName: " + name +
                 "\nDescription: " + description +
@@ -112,6 +94,6 @@ public class Project {
                 "\n--------------------";
     }
     public void setBuilderId(String id) {
-        this.builderId=id;
+        this.builderId = id;
     }
 }
