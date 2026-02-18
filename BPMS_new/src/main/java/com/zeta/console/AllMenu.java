@@ -24,7 +24,23 @@ public class AllMenu {
             System.out.println("6. Delete project");
             System.out.println("7. Exit");
 
-            int choice = scanner.nextInt();
+
+            int choice;
+
+            try {
+
+                choice = scanner.nextInt();
+
+            } catch (Exception e) {
+
+                logger.info("Invalid input. Please enter number only.");
+
+                scanner.nextLine();
+
+                continue;
+
+            }
+
             switch (choice) {
                 case 1:
                     System.out.println("Your Id : "+user.getId());
@@ -155,8 +171,22 @@ public class AllMenu {
             System.out.println("1. Create Task");
             System.out.println("2. View All Tasks");
             System.out.println("3. Back");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice;
+
+            try {
+
+                choice = scanner.nextInt();
+
+            } catch (Exception e) {
+
+                logger.info("Invalid input. Please enter number only.");
+
+                scanner.nextLine();
+
+                continue;
+
+            }
+
             switch (choice) {
                 case 1:
                     String projectId;
@@ -219,8 +249,22 @@ public class AllMenu {
             System.out.println("2. View My Tasks");
             System.out.println("3. Update Task Status");
             System.out.println("4. Logout");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice;
+
+            try {
+
+                choice = scanner.nextInt();
+
+            } catch (Exception e) {
+
+                logger.info("Invalid input. Please enter number only.");
+
+                scanner.nextLine();
+
+                continue;
+
+            }
+
             switch (choice) {
                 case 1:
                     service.showBuilderProjects(builderName);
@@ -265,8 +309,22 @@ public class AllMenu {
             System.out.println("1. View My Projects");
             System.out.println("2. Logout");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice;
+
+            try {
+
+                choice = scanner.nextInt();
+
+            } catch (Exception e) {
+
+                logger.info("Invalid input. Please enter number only.");
+
+                scanner.nextLine();
+
+                continue;
+
+            }
+
             switch (choice) {
                 case 1:
                     service.showClientProjects(clientId);

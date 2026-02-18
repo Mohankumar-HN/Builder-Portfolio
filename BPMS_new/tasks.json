@@ -375,5 +375,40 @@
     "description" : "Need to complete the interiors within 30 days",
     "assignedBuilder" : "Bob",
     "status" : "UPCOMING"
+  } ],
+  "P165" : [ {
+    "taskId" : "T1",
+    "name" : "Electrical",
+    "description" : "Wiring",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P170" : [ {
+    "taskId" : "T2",
+    "name" : "Foundation Work",
+    "description" : "Start digging",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P171" : [ {
+    "taskId" : "T3",
+    "name" : "Plumbing",
+    "description" : "Install pipes",
+    "assignedBuilder" : "BuilderA",
+    "status" : "COMPLETED"
+  } ],
+  "P175" : [ {
+    "taskId" : "T4",
+    "name" : "Roof Work",
+    "description" : "Concrete",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
+  } ],
+  "P176" : [ {
+    "taskId" : "T5",
+    "name" : "Painting",
+    "description" : "Wall paint",
+    "assignedBuilder" : "BuilderA",
+    "status" : "UPCOMING"
   } ]
 }
