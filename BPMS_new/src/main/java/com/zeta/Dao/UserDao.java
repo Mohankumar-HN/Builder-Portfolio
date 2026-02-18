@@ -2,13 +2,16 @@ package com.zeta.Dao;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zeta.entity.ROLE_TYPE;
 import com.zeta.entity.User;
+import com.zeta.services.AuthService;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class UserDao {
     private static final String FILE_NAME = System.getProperty("user.dir")+"/users.json";
@@ -17,17 +20,17 @@ public class UserDao {
     public UserDao(){
         loadFromFile();
     }
-//    public List<User> getAllUsers(){
-//        return users;
-//    }
+
     public synchronized void addUser(User user){
         users.add(user);
         saveToFile();
     }
+
+
+
     private static void loadFromFile () {
         try {
             File file = new File(FILE_NAME);
-            System.out.println("Loading from: " + file.getAbsolutePath());
             if(!file.exists()){
                 System.out.println("File not found");
                 file.createNewFile();
@@ -40,7 +43,7 @@ public class UserDao {
             List<User> loadedUsers=mapper.readValue(file, new TypeReference<List<User>>() {});
             users.clear();
             users.addAll(loadedUsers);
-            System.out.println("File path: " + file.getAbsolutePath());
+
         } catch (IOException e) {
             System.out.println("Error loading data: " + e.getMessage());
         }
@@ -50,20 +53,13 @@ public class UserDao {
     private static void saveToFile () {
         try {
             File file = new File(FILE_NAME);
-            System.out.println("Saving to: " + file.getAbsolutePath());
+
             mapper.writerWithDefaultPrettyPrinter()
                     .writeValue(new File(FILE_NAME), users);
         } catch (IOException e) {
             System.out.println("Error saving data: " + e.getMessage());
         }
     }
-//    public synchronized User getUserByName(String name) {
-//        for (User user : users) {
-//            if (user.getUserName().equalsIgnoreCase(name)) {
-//                return user;
-//            }
-//        }
-//        return null;
-//    }
+
 
 }
