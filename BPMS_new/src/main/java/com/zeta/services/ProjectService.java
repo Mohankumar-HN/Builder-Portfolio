@@ -36,11 +36,23 @@ public class ProjectService {
                 p.getTasks().addAll(ts);
             }
         }
-        projectCounter = projects.size() + 1;
+        int max = 0;
+
+        for (String id : projects.keySet()) {
+            if (id != null && id.startsWith("P")) {
+                try {
+                    int num = Integer.parseInt(id.substring(1));
+                    if (num > max) {
+                        max = num;
+                    }
+                } catch (NumberFormatException ignored) {}
+            }
+        }
+        projectCounter = max + 1;
     }
-    public synchronized void createProject(String id, String name, String description,
+    public synchronized void createProject( String name, String description,
                                            String start, String end, String clientId,String projectManagerId,PROJECT_STATUS status) {
-        id = generateProjectId();
+        String id = generateProjectId();
         try {
             LocalDate startDate = LocalDate.parse(start);  // format: yyyy-MM-dd
             LocalDate endDate = LocalDate.parse(end);
@@ -103,7 +115,7 @@ public class ProjectService {
             System.out.println("project not found");
             return false;
         }
-        User builder = userDao.getUserByName(name);
+        User builder = AuthService.getUserByName(name);
 
         if (builder == null || builder.getRole() != ROLE_TYPE.BUILDER) {
             System.out.println("Invalid builder! User not found or not a BUILDER.");

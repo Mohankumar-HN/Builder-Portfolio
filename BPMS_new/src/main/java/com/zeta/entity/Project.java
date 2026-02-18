@@ -107,6 +107,6 @@ public class Project {
 
 
     public void setBuilderId(String id) {
-        this.builderId=builderId;
+        this.builderId=id;
     }
 }

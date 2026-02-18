@@ -176,7 +176,7 @@ public class App {
                             System.out.println("Invalid client name.");
                             continue;
                         }
-                        client = userDao.getUserByName(clientName);
+                        client = AuthService.getUserByName(clientName);
                         if (client == null || client.getRole() != ROLE_TYPE.CLIENT) {
                             System.out.println("Client not found or not a CLIENT role. Try again.");
                             continue;
@@ -196,7 +196,7 @@ public class App {
                             System.out.println(" Invalid status! Try again.");
                         }
                     }
-                    service.createProject(id, name, description, startDate, endDate, clientId, user.getId(), status);
+                    service.createProject(name, description, startDate, endDate, clientId, user.getId(), status);
                     break;
                 case 2: {
                     scanner.nextLine();

@@ -17,9 +17,9 @@ public class UserDao {
     public UserDao(){
         loadFromFile();
     }
-    public List<User> getAllUsers(){
-        return users;
-    }
+//    public List<User> getAllUsers(){
+//        return users;
+//    }
     public synchronized void addUser(User user){
         users.add(user);
         saveToFile();
@@ -57,13 +57,13 @@ public class UserDao {
             System.out.println("Error saving data: " + e.getMessage());
         }
     }
-    public synchronized User getUserByName(String name) {
-        for (User user : users) {
-            if (user.getUserName().equalsIgnoreCase(name)) {
-                return user;
-            }
-        }
-        return null;
-    }
+//    public synchronized User getUserByName(String name) {
+//        for (User user : users) {
+//            if (user.getUserName().equalsIgnoreCase(name)) {
+//                return user;
+//            }
+//        }
+//        return null;
+//    }
 
 }

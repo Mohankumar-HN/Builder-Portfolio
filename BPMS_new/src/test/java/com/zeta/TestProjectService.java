@@ -20,7 +20,7 @@ public class TestProjectService {
     void setUp() {
         projectService = new ProjectService();
         projectService.getProjects().clear();
-        projectService.createProject(null, "Skyrise", "6 storage buildings", "2022-09-09",
+        projectService.createProject( "Skyrise", "6 storage buildings", "2022-09-09",
                 "2026-09-09", "C1", "null",PROJECT_STATUS.UPCOMING);
         projectId = projectService.getProjects().keySet().iterator().next();
         UserDao.users.clear();

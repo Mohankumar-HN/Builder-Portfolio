@@ -67,6 +67,14 @@ public class AuthService {
             return true;
 
     }
+    public synchronized static User getUserByName(String name) {
+        for (User user : users) {
+            if (user.getUserName().equalsIgnoreCase(name)) {
+                return user;
+            }
+        }
+        return null;
+    }
 
 }
 
