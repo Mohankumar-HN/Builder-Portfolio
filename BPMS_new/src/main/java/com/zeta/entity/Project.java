@@ -39,7 +39,12 @@ public class Project {
         return projectId;
     }
     public String getClientId() { return clientId; }
+    private String projectManager;
 
+    // getters
+    public String getProjectManager() {
+        return projectManager;
+    }
     public String getName() {
         return name;
     }
@@ -102,7 +107,8 @@ public class Project {
                 "\nClient ID: " + clientId +
                 "\nProject Manager ID: " + projectManagerId +
                 "\nBuilder ID: " + builderId +
-                "\nStatus: " + status ;
+                "\nStatus: " + status +
+                "-------------------'";
     }
 
 

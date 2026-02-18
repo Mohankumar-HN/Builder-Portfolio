@@ -109,7 +109,7 @@ public class AllMenu {
                 }
                 case 3:
                     System.out.println("Showing projects");
-                    service.showProjects();
+                    service.showProjects(user.getId());
                     break;
                 case 4: {
                     scanner.nextLine();

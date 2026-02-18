@@ -84,16 +84,20 @@ public class ProjectService {
             System.out.println("Project Not Found!");
         }
     }
-    public synchronized void showProjects() {
-        if(projects.isEmpty()){
-            System.out.println("No project found");
-        }else {
-            for (Project project : projects.values()) {
+
+    public synchronized void showProjects(String managerId) {
+        boolean found = false;
+        for (Project project : projects.values()) {
+            if (project.getProjectManagerId() != null && managerId.equals(project.getProjectManagerId())) {
                 System.out.println(project);
+                found = true;
             }
         }
-
+        if (!found) {
+            System.out.println("No projects found for manager: " + managerId);
+        }
     }
+
 
     public synchronized void deleteProject(String id){
         if(projects.containsKey(id)){
