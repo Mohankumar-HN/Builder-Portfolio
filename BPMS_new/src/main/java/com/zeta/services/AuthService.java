@@ -2,9 +2,7 @@ package com.zeta.services;
 
 import com.zeta.Dao.UserDao;
 import com.zeta.entity.User;
-
 import static com.zeta.Dao.UserDao.users;
-
 
 public class AuthService {
     public String generateUserId() {
@@ -68,6 +66,4 @@ public class AuthService {
         }
         return null;
     }
-
 }
-

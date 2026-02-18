@@ -8,13 +8,16 @@ import com.zeta.services.AuthService;
 import com.zeta.services.ProjectService;
 
 import java.util.Scanner;
+import java.util.logging.Logger;
+
 public class AllMenu {
     private static final ProjectService service = new ProjectService();
+    static final Logger logger= Logger.getLogger(AllMenu.class.getName());
     static void projectManagerMenu(Scanner scanner, User user) {
         while (true) {
             System.out.println("\n--- PROJECT MANAGER MENU ---");
             System.out.println("1. Create Project");
-            System.out.println("2. Update Project");
+            System.out.println("2. Update Project Status");
             System.out.println("3. See projects");
             System.out.println("4. Assign Builders");
             System.out.println("5. See Task Menu");
@@ -32,7 +35,7 @@ public class AllMenu {
                         name = scanner.nextLine();
 
                         if (!AuthService.validateNameandDescription(name)) {
-                            System.out.println("Invalid project name. Must contain at least one letter.");
+                            logger.info("Invalid project name. Must contain at least one letter.");
                             continue;
                         }
                         break;
@@ -43,7 +46,7 @@ public class AllMenu {
                         description = scanner.nextLine();
 
                         if (!AuthService.validateNameandDescription(description)) {
-                            System.out.println("Invalid description. Must contain at least one letter.");
+                            logger.info("Invalid description. Must contain at least one letter.");
                             continue;
                         }
                         break;
@@ -58,12 +61,12 @@ public class AllMenu {
                         String clientName = scanner.nextLine();
 
                         if (!AuthService.validateNameandDescription(clientName)) {
-                            System.out.println("Invalid client name.");
+                            logger.warning("Invalid client name.");
                             continue;
                         }
                         client = AuthService.getUserByName(clientName);
                         if (client == null || client.getRole() != ROLE_TYPE.CLIENT) {
-                            System.out.println("Client not found or not a CLIENT role. Try again.");
+                            logger.info("Client not found or not a CLIENT role. Try again.");
                             continue;
                         }
                         clientId = client.getId();
@@ -78,7 +81,7 @@ public class AllMenu {
                             status = PROJECT_STATUS.valueOf(statusInput.toUpperCase());
                             break;
                         } catch (IllegalArgumentException e) {
-                            System.out.println(" Invalid status! Try again.");
+                            logger.info(" Invalid status! Try again.");
                         }
                     }
                     service.createProject(name, description, startDate, endDate, clientId, projectManagerId, status);
@@ -88,7 +91,7 @@ public class AllMenu {
                     System.out.println("Enter project id:");
                     String updateId = scanner.nextLine();
                     if (!service.getProjects().containsKey(updateId)) {
-                        System.out.println("Project not found!");
+                        logger.info("Project not found!");
                         break;
                     }
                     PROJECT_STATUS updateStatus;
@@ -100,7 +103,7 @@ public class AllMenu {
                             updateStatus = PROJECT_STATUS.valueOf(statusInput.toUpperCase());
                             break;
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Invalid status entered! Try again.");
+                            logger.info("Invalid status entered! Try again.");
                         }
                     }
                     service.updateStatus(updateId, updateStatus);
@@ -119,7 +122,7 @@ public class AllMenu {
                         System.out.println("Enter builder name:");
                         String builderName = scanner.nextLine();
                         if (!AuthService.validateNameandDescription(builderName)) {
-                            System.out.println("Invalid builder name.");
+                            logger.info("Invalid builder name.");
                             continue;
                         }
                         boolean success = service.assignBuilder(pid, builderName);
@@ -142,7 +145,7 @@ public class AllMenu {
                     System.out.println("Exiting...");
                     return;
                 default:
-                    System.out.println("Invalid choice");
+                    logger.info("Invalid choice");
             }
         }
     }
@@ -162,7 +165,7 @@ public class AllMenu {
                         projectId = scanner.nextLine();
 
                         if (!service.getProjects().containsKey(projectId)) {
-                            System.out.println("Project not found. Try again.");
+                            logger.info("Project not found. Try again.");
                             continue;
                         }
                         break;
@@ -172,7 +175,7 @@ public class AllMenu {
                         System.out.println("Enter Task Name:");
                         taskName = scanner.nextLine();
                         if (!AuthService.validateNameandDescription(taskName)) {
-                            System.out.println("Invalid task name.");
+                            logger.info("Invalid task name.");
                             continue;
                         }
                         break;
@@ -182,7 +185,7 @@ public class AllMenu {
                         System.out.println("Enter Task Description:");
                         taskDesc = scanner.nextLine();
                         if (!AuthService.validateNameandDescription(taskDesc)) {
-                            System.out.println("Invalid task description.");
+                            logger.info("Invalid task description.");
                             continue;
                         }
                         break;
@@ -200,7 +203,7 @@ public class AllMenu {
                 case 3:
                     return;
                 default:
-                    System.out.println("Invalid choice");
+                    logger.info("Invalid choice");
             }
         }
     }
@@ -227,7 +230,7 @@ public class AllMenu {
                     break;
                 case 3:
                     if (!service.hasTasksForBuilder(builderName)) {
-                        System.out.println("No tasks assigned to you.");
+                        logger.info("No tasks assigned to you.");
                         break;
                     }else{
                         System.out.println("Enter Project ID:");
@@ -241,7 +244,7 @@ public class AllMenu {
                         try {
                             status = TASK_STATUS.valueOf(input.toUpperCase());
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Invalid status.");
+                            logger.info("Invalid status.");
                             break;
                         }
                         service.updateTaskStatus(projectId, taskId, builderName, status);
@@ -250,7 +253,7 @@ public class AllMenu {
                 case 4:
                     return;
                 default:
-                    System.out.println("Invalid choice");
+                    logger.info("Invalid choice");
             }
         }
     }
@@ -271,7 +274,7 @@ public class AllMenu {
                 case 2:
                     return;
                 default:
-                    System.out.println("Invalid choice");
+                    logger.info("Invalid choice");
             }
         }
     }

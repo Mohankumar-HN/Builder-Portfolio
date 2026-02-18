@@ -1,6 +1,7 @@
 
 package com.zeta.services;
 import com.zeta.Dao.UserDao;
+import com.zeta.console.App;
 import com.zeta.entity.*;
 
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import com.zeta.Dao.TaskDao;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 
 public class ProjectService {
@@ -19,7 +21,7 @@ public class ProjectService {
     private final TaskDao taskDao = new TaskDao();
     private Map<String, Project> projects;
     private Map<String, List<Task>> tasksByProject;
-
+    static final Logger logger= Logger.getLogger(ProjectService.class.getName());
     private static int projectCounter = 1;
     private String generateProjectId() {
         return "P" + (projectCounter++);
@@ -57,11 +59,11 @@ public class ProjectService {
             LocalDate startDate = LocalDate.parse(start);
             LocalDate endDate = LocalDate.parse(end);
             if (endDate.isBefore(LocalDate.now())) {
-                System.out.println("End date cannot be in the past!");
+                logger.info("End date cannot be in the past!");
                 return;
             }
             if (endDate.isBefore(startDate)) {
-                System.out.println("End date cannot be before start date!");
+                logger.info("End date cannot be before start date!");
                 return;
             }
             Project project = new Project(id, name, description, startDate, endDate, clientId,projectManagerId, status);
@@ -70,7 +72,7 @@ public class ProjectService {
             System.out.println("Project Created Successfully!");
 
         } catch (DateTimeParseException e) {
-            System.out.println("Invalid date format! Use yyyy-MM-dd");
+            logger.info("Invalid date format! Use yyyy-MM-dd");
         }
     }
 
@@ -81,7 +83,7 @@ public class ProjectService {
             System.out.println("Status Updated Successfully!");
             projectDao.saveProjects(projects);
         } else {
-            System.out.println("Project Not Found!");
+            logger.info("Project Not Found!");
         }
     }
 
@@ -94,7 +96,7 @@ public class ProjectService {
             }
         }
         if (!found) {
-            System.out.println("No projects found for manager: " + managerId);
+            logger.info("No projects found for manager: " + managerId);
         }
     }
 
@@ -109,19 +111,19 @@ public class ProjectService {
                 taskDao.saveTasks(tasksByProject);
             }
         }else{
-            System.out.println("project not found");
+            logger.info("project not found");
         }
     }
     public  synchronized boolean assignBuilder(String id,String name){
         Project project=projects.get(id);
         if(project==null) {
-            System.out.println("project not found");
+            logger.info("project not found");
             return false;
         }
         User builder = AuthService.getUserByName(name);
 
         if (builder == null || builder.getRole() != ROLE_TYPE.BUILDER) {
-            System.out.println("Invalid builder! User not found or not a BUILDER.");
+            logger.info("Invalid builder! User not found or not a BUILDER.");
             return false;
         }
 
@@ -153,7 +155,7 @@ public class ProjectService {
             tasksByProject.computeIfAbsent(projectId, k -> new java.util.ArrayList<>()).add(task);
             taskDao.saveTasks(tasksByProject);
         } else {
-            System.out.println("Project not found!");
+            logger.info("Project not found!");
         }
     }
     public synchronized void showAllTasks() {
@@ -186,7 +188,7 @@ public class ProjectService {
         }
 
         if (!found) {
-            System.out.println("No projects assigned.");
+            logger.info("No projects assigned.");
         }
     }
 
@@ -202,7 +204,7 @@ public class ProjectService {
             }
         }
         if (!found) {
-            System.out.println("No tasks assigned.");
+            logger.info("No tasks assigned.");
         }
     }
     public synchronized void updateTaskStatus(
@@ -214,7 +216,7 @@ public class ProjectService {
         Project project = projects.get(projectId);
 
         if (project == null) {
-            System.out.println("Project not found.");
+            logger.info("Project not found.");
             return;
         }
 
@@ -233,7 +235,7 @@ public class ProjectService {
             }
         }
 
-        System.out.println("Task not found or not assigned to you.");
+        logger.info("Task not found or not assigned to you.");
     }
 
 
@@ -256,10 +258,9 @@ public class ProjectService {
         }
 
         if (!found) {
-            System.out.println("No projects found for this client.");
+            logger.info("No projects found for this client.");
         }
     }
-
     public Map<String,Project> getProjects(){
         return projects;
     }
@@ -273,5 +274,4 @@ public class ProjectService {
         }
         return false;
     }
-
 }

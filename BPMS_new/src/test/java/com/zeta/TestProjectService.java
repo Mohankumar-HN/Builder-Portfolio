@@ -67,21 +67,16 @@ public class TestProjectService {
 
     @Test
     void testCreateTaskProjectNotFound() {
-        projectService.createTask("INVALID", "Task",
+        projectService.createTask( "INVALID", "Task",
                 "Desc", "BuilderA");
     }
     @Test
     void testUpdateTaskStatusSuccess() {
-        projectService.createTask(projectId,
-                "Plumbing",
-                "Install pipes",
-                "BuilderA");
-
+        projectService.createTask(projectId, "Plumbing", "Install pipes", "BuilderA");
         String taskId = projectService.getProjects().get(projectId).getTasks().get(0).getTaskId();
         projectService.updateTaskStatus(projectId, taskId, "BuilderA", TASK_STATUS.COMPLETED);
         assertEquals(TASK_STATUS.COMPLETED,
                 projectService.getProjects().get(projectId).getTasks().get(0).getStatus());
-
     }
     @Test
     void testUpdateTaskStatusWrongBuilder() {
@@ -127,7 +122,6 @@ public class TestProjectService {
     @Test
     void testShowAllTasks() {
         projectService.createTask(projectId, "Painting", "Wall paint", "BuilderA");
-
         projectService.showAllTasks();
     }
 }

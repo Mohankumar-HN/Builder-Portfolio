@@ -99,7 +99,8 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project ID: " + projectId +
+        return "----------------------"+
+                "\nProject ID: " + projectId +
                 "\nName: " + name +
                 "\nDescription: " + description +
                 "\nStart Date: " + startDate +
@@ -108,10 +109,8 @@ public class Project {
                 "\nProject Manager ID: " + projectManagerId +
                 "\nBuilder ID: " + builderId +
                 "\nStatus: " + status +
-                "-------------------'";
+                "\n--------------------";
     }
-
-
     public void setBuilderId(String id) {
         this.builderId=id;
     }

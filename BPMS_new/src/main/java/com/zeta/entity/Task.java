@@ -17,9 +17,7 @@ public class Task {
     private String assignedBuilder;
 
     @JsonProperty("status")
-    private TASK_STATUS status;   
-
-
+    private TASK_STATUS status;
     public Task() {
     }
 

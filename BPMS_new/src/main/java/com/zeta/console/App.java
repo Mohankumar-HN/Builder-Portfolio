@@ -8,8 +8,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Logger;
+
 import static com.zeta.console.AllMenu.*;
 public class App {
+    static final Logger logger= Logger.getLogger(App.class.getName());
     private static final UserDao userDao = new UserDao();
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -65,11 +68,11 @@ public class App {
                     selectedRole = ROLE_TYPE.CLIENT;
                     break;
                 default:
-                    System.out.println("Invalid role selection.");
+                    logger.info("Invalid role selection.");
                     return;
             }
         } catch (InputMismatchException inputMismatchException) {
-            System.out.println("Invalid input");
+            logger.warning("Invalid input");
             scanner.nextLine();
             return;
         }
@@ -84,7 +87,7 @@ public class App {
         User loggedInUser = authService.logIn(name, password);
 
         if (loggedInUser != null && loggedInUser.getRole() == selectedRole) {
-            System.out.println("Login successful");
+            logger.info("Login successful");
 
             switch (selectedRole) {
                 case PROJECTMANAGER:
@@ -99,7 +102,7 @@ public class App {
             }
 
         } else {
-            System.out.println("Login failed (wrong role or credentials)");
+            logger.warning("Login failed (wrong role or credentials)");
         }
     }
 
@@ -110,10 +113,10 @@ public class App {
             String input = scanner.nextLine().trim();
 
             try {
-                LocalDate.parse(input); // just checking format
+                LocalDate.parse(input);
                 return input;
             } catch (DateTimeParseException e) {
-                System.out.println("Invalid date format! Please use yyyy-MM-dd");
+                logger.info("Invalid date format! Please use yyyy-MM-dd");
             }
         }
     }
@@ -125,11 +128,11 @@ public class App {
             System.out.print("Enter username: ");
             username = scanner.nextLine();
             if (!AuthService.validateNameandDescription(username)) {
-                System.out.println("Username must contain at least one letter and cannot be empty.");
+                logger.info("Username must contain at least one letter and cannot be empty.");
                 continue;
             }
             if (authService.checkDuplicateUser(username)) {
-                System.out.println("Username already taken. Try another.");
+                logger.info("Username already taken. Try another.");
             } else {
                 break;
             }
@@ -154,11 +157,10 @@ public class App {
         while (role == null) {
             System.out.println("Enter your role (PROJECTMANAGER, BUILDER, CLIENT): ");
             String roleInput = scanner.next();
-
             try {
                 role = ROLE_TYPE.valueOf(roleInput.toUpperCase());
             } catch (IllegalArgumentException e) {
-                System.out.println("Invalid role. Please try again.");
+                logger.info("Invalid role. Please try again.");
             }
         }
         String id = authService.generateUserId();
