@@ -83,4 +83,9 @@
   "userName" : "shiva",
   "password" : "Shiva@1234",
   "role" : "PROJECTMANAGER"
+}, {
+  "id" : "U18",
+  "userName" : "Modi",
+  "password" : "Modi@1234",
+  "role" : "PROJECTMANAGER"
 } ]
