@@ -2,6 +2,7 @@ package com.zeta.services;
 
 import com.zeta.Dao.UserDao;
 import com.zeta.entity.User;
+ import java.util.regex.Pattern;
 
 import static com.zeta.Dao.UserDao.users;
 
@@ -28,15 +29,19 @@ public class AuthService {
         }
         return null;
     }
-    public boolean isValidPassword(String password) {
-        if (password == null || password.length() < 8 ||
-                !password.matches(".*[A-Z].*") ||
-                !password.matches(".*[a-z].*") ||
-                (!password.matches(".*[0-9].*")) ||
-                (!password.matches(".*[@#$%^&+=!].*")))
-            return false;
-        return true;
+  
+
+private static final Pattern PASSWORD_PATTERN =
+        Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@#$%^&+=!]).{8,}$");
+
+public boolean isValidPassword(String password) {
+
+    if (password == null) {
+        return false;
     }
+
+    return PASSWORD_PATTERN.matcher(password).matches();
+}
     public boolean checkDuplicateUser(String username) {
         for (User user : users) {
             if (user.getUserName().equalsIgnoreCase(username)) {
